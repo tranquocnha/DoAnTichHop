@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Danh mục thể loại</title>
+
+<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+<!--  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
+<!--  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+<!--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+          integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+          crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+          crossorigin="anonymous"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+  <link rel="stylesheet" href="/Vinh/css/Footer.css">
+<!--  <link rel="stylesheet" href="/nha/css/category/create.css">-->
+  <link rel="stylesheet" href="/nha/css/Demo.css">
+  <link rel="stylesheet" href="/Vinh/css/Header.css">
+
+
+</head>
+<body>
+<div th:insert="~{/HeaderFooter/Header::header-cline}"></div>
+<div class="main">
+  <div th:insert="~{/nha/admin/ListProduct::main__left}"></div>
+  <div class="main__right">
+    <div class="create__category">
+      <button>
+        <a th:href="@{/admin/category/create}">
+         Thêm Thể Loại Sản Phẩm
+       </a>
+      </button>
+    </div>
+
+    <div>
+      <span class="alert alert-success" th:utext="${mgsedit}" th:if="${mgsedit}"></span>
+    </div>
+    <table class="table__container">
+      <thead class="table__thead">
+      <tr>
+        <th>Mã Danh Mục</th>
+        <th>Tên Danh Mục</th>
+        <th>Hình Ảnh </th>
+        <th>Hành Động</th>
+      </tr>
+      </thead>
+
+      <tbody class="table__tbody">
+      <tr th:each="danhmuc : ${category}">
+        <td>
+          <h4 th:text="${danhmuc.idCategory}"></h4>
+        </td>
+        <td ><h4 th:text="${danhmuc.categoryName}"></h4>
+        </td>
+        <td><img th:href="@{'/Images/'+${danhmuc.categoryImg}}">
+        </td>
+        <td>
+          <a th:href="@{/admin/category/edit(id = ${danhmuc.idCategory})}">
+            <button class="button__action background-blue " th:href="@{/admin/category/edit(id = ${danhmuc.idCategory})}">
+              <span>Cập nhật</span>
+            </button>
+          </a>
+          <a th:href="@{/admin/category/delete/{ids}(ids = ${danhmuc.idCategory})}">
+            <button class="button__action background-red ">
+              <span>X</span>
+            </button>
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div  th:insert="~{/HeaderFooter/Footer::footer_clinet}">
+</div>
+<script src="/bootstrap/js/jquery.js"></script>
+</body>
+</html>
