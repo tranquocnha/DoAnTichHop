@@ -40,13 +40,13 @@ public class Product {
     @Column(length = 2500)
     private String description;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date datePost;
+    private String datePost;
     private String status;
 
     public Product() {
     }
 
-    public Product(int idProduct, Category category, Account accounts, Set<Comment> comments, Set<Color> color, Auction auction, Set<ProductBill> productBills, String productName, String image1, String image2, String image3, String description, Date datePost, String status) {
+    public Product(int idProduct, Category category, Account accounts, Set<Comment> comments, Set<Color> color, Auction auction, Set<ProductBill> productBills, String productName, String image1, String image2, String image3, String description, String datePost, String status) {
         this.idProduct = idProduct;
         this.category = category;
         this.accounts = accounts;
@@ -159,19 +159,19 @@ public class Product {
         this.description = description;
     }
 
-    public Date getDatePost() {
-        return datePost;
-    }
-
-    public void setDatePost(Date datePost) {
-        this.datePost = datePost;
-    }
-
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDatePost() {
+        return datePost;
+    }
+
+    public void setDatePost(String datePost) {
+        this.datePost = datePost;
     }
 }

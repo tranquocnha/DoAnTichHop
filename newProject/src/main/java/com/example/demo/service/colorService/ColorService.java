@@ -16,8 +16,15 @@ public interface ColorService {
 
     void delete(int idColor);
 
-
     List<Color> findByIdProduct(int id);
 
     Page<Color> findAllPage(Pageable pageable);
+
+    List<Color> findAllProduct(String idAccount);
+
+    List<Color> findAllApprovedProduct(String status , String idAccount);
+
+    List<Color> findProduct(String status , Integer idCategory);
+
+    List<Color> findByProduct_Status(String status);
 }
