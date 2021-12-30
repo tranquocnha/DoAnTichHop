@@ -8,21 +8,6 @@ body,h1,h2,h3,h4,h5,h6{
     margin: 0px;
 }
 
-.search__space{
-    margin: 72px 0px 30px;
-}
-
-.input__search {
-    max-width: 300px;
-    width:300px !important;
-}
-
-.button__search {
-    background: #ffc220;
-    outline:none;
-    border-color: #ffc220;
-    border-radius:10px ;
-}
 /* Main */
 
 .main{
@@ -85,6 +70,7 @@ body,h1,h2,h3,h4,h5,h6{
     font-weight: 500;
     color:#333;
     background: #fff;
+    font-size: 24px;
 }
 
 .main__category-item {
@@ -129,6 +115,7 @@ body,h1,h2,h3,h4,h5,h6{
     font-weight: 500;
     color:#333;
     background: #fff;
+    font-size: 24px;
 }
 
 .main__spotlight-item{
@@ -148,6 +135,7 @@ body,h1,h2,h3,h4,h5,h6{
 
 
 .main__spotlight-info {
+    font-size: 16px;
     margin: 0px 0px 0px 20px;
 }
 
@@ -178,6 +166,7 @@ body,h1,h2,h3,h4,h5,h6{
     font-weight: 500;
     color:#333;
     background: #fff;
+    font-size: 24px;
 }
 
 .main__bestseller-list{
@@ -198,13 +187,23 @@ body,h1,h2,h3,h4,h5,h6{
     align-items: center;
 }
 
+.main__bestseller-item > a {
+    text-decoration: none;
+
+}
+
 .main__bestseller-info {
     margin: 0px 0px 0px 20px;
+}
+
+.main__bestseller-info > a {
+    text-decoration: none;
 }
 
 .main__bestseller-info p {
     font-weight: 500;
     color: #333;
+    font-size: 16px;
 }
 
 .main__bestseller-ranking {

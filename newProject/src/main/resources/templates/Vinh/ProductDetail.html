@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="page__right">
-                <h2 class="product__title" th:text="${product.productName}"></h2>
+                <h1 class="product__title" th:text="${product.productName}"></h1>
                 <div class="product__price" >
                     <p id="priceProduct">1</p>
                     <p style="margin-left: 10px">USD</p>
@@ -76,16 +76,16 @@
                     <h3>Số lượng: </h3>
                     <div class="product__quantity-button">
                         <p id="hello"></p>
-                        <button onclick="handleDescrease()">
+                        <button onclick="handleDescrease()" class="border rounded-circle" style="background: white; border-color: #c9c9c9">
                             <span>&#8722;</span>
                         </button>
-                        <div>
+                        <div class="product__quantity-input">
                             <div>
                                 <input type="text" value="1" name="soluongs" id="count" readonly="readonly"/>
                                 <input type="text" style="display: none" id="countMax"/>
                             </div>
                         </div>
-                        <button onclick="handleIncrease()">
+                        <button onclick="handleIncrease()" class="border rounded-circle" style="background: #212529;border-color: #212529">
                             <span>&#43;</span>
                         </button>
                     </div>

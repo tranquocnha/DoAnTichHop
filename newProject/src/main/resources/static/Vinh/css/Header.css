@@ -24,9 +24,34 @@ body,h1,h2,h3,h4,h5,h6 {
 
 .header__top{
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
     /* padding:10px 50px; */
+}
 
+.header__top-right > a > button {
+    outline: none;
+    background-color: #FFCC20;
+    border: 1px solid #FFCC20;
+    height: 38px;
+    width: 108px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.header__top-right > a {
+    text-decoration: none;
+}
+
+.header__top-right > a >button > img {
+    margin-right:7px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    object-fit: cover;
 }
 
 .header__management {
@@ -138,7 +163,7 @@ body,h1,h2,h3,h4,h5,h6 {
     border: 1px solid #e7e7e7;
     border-radius: 10px;
     width: 551px;
-    height: 36px;
+    height: 40px;
 }
 
 .header__search-input:focus{
@@ -149,34 +174,42 @@ body,h1,h2,h3,h4,h5,h6 {
     border-radius: 10px;
     border: 1px solid #e7e7e7;
     margin: 0px 0px 0px 7px;
+    height: 40px !important;
 }
 
-
-
-.header__span {
+.header__search-button {
     position: absolute;
-    right: 7px;
-    bottom: 1px;
-    padding: 4px ;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    background-color: #ffc220;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    padding: 0px 5px;
+    width: 44px;
+    height: 88%;
     cursor: pointer;
-    height: 37px;
-}
-
-.header__span > button {
-    background: none;
+    background: white;
+    border-radius: 30px;
     outline: none;
     border: none;
 }
 
-.header__search img {
-    margin: 0px 10px;
-    width: auto;
-    height: 20px;
-    cursor: pointer;
+.header__search-button:hover {
+    box-shadow: 0 7px 14px rgb(50 50 93 / 10%), 0 3px 6px rgb(0 0 0 / 8%);
+    text-decoration: none;
+    color: #525f7f;
 }
+
+.header__search-button > img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+}
+
+
+
+
+
+
 
 .header__navigation {
     display: flex;
