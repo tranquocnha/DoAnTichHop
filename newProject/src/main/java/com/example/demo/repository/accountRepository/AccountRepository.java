@@ -11,7 +11,18 @@ import org.springframework.data.repository.query.Param;
 public interface AccountRepository extends JpaRepository<Account, String> {
     Account findByIdAccount(String account);
 
-    @Query(value = "select a.password from Account a where a.idAccount =: idAccount")
+    @Query(value = "select `password` from `account`  where id_account =:idAccount", nativeQuery = true)
     String findByPassword(@Param("idAccount") String idAccount);
+
+//    @Query(value = "select pass_word from account where user_name =:userName", nativeQuery = true)
+//    String  findByPass(@Param("userName") String userName);
+//    String findByPassword(@Param("idAccount")String idAccount);
+
+    @Query(value="select *  from  acc_user join`account`  where  `account`.id_account=acc_user.`account` and   gmail=:gmail", nativeQuery = true)
+
+    Account findAccountByGmail(@Param("gmail")String gmail);
+
+
+    Account findAccountByResetPasswordToken(String token);
 
 }

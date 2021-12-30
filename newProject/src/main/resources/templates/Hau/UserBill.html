@@ -31,7 +31,6 @@
                 <div class="card-header" id="headingOne">
                     <h5 class="mb-0">
                         <div class="accordion__title">
-                            <span></span>
                             <h4 style="text-decoration: none" data-toggle="collapse" data-target="#collapseOne"
                                 aria-expanded="true"
                                 aria-controls="collapseOne">
@@ -44,9 +43,9 @@
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
 
-                        <div><a class="card__body-content" th:href="@{/ProfileDetail/__${idUser}__}">Tài khoản của tôi</a></div>
-                        <div><a class="card__body-content" th:href="@{/listOfInvoices/__${idUser}__}">Đơn mua</a></div>
-                        <div><a class="card__body-content" th:href="@{/editPass/__${users1.account.userName}__}">Đổi mật khẩu</a></div>
+                        <div><a class="card__body-content" th:href="@{/ProfileDetail/__${users.idUser}__}">Tài khoản của tôi</a></div>
+                        <div><a class="card__body-content" th:href="@{/listOfInvoices/__${users.idUser}__}">Đơn mua</a></div>
+                        <div><a class="card__body-content" th:href="@{/editPass/__${users.account.idAccount}__}">Đổi mật khẩu</a></div>
 
                     </div>
                 </div>
@@ -66,14 +65,14 @@
                 <tr class="table" style="font-size:17px ">
                     <th class="table__col">Số bill</th>
                     <th class="table__col">Địa chỉ giao hàng</th>
-                    <th class="table__col">Ngày giao hàng</th>
+
                     <th class="table__col">Trạng thái</th>
                     <th class="table__col">Tổng tiền</th>
                 </tr>
                 <tr class="mt-2" th:each="billDetail : ${bills}" >
-                    <td class="table__data" th:text="${billDetail.inBill}"></td>
-                    <td class="table__data" th:text="${billDetail.addressOder}"></td>
-                    <td class="table__data" th:text="${billDetail.dateOder}"></td>
+                    <td class="table__data" th:text="${billDetail.idBill}"></td>
+                    <td class="table__data" th:text="${billDetail.current}"></td>
+
                     <td class="table__data" th:text="${billDetail.status}"></td>
                     <td class="table__data" th:text="${billDetail.totalCost}"></td>
                 </tr>

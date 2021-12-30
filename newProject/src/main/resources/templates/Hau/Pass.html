@@ -5,18 +5,16 @@
     <title>Chỉnh sửa mật khẩu</title>
     <link rel="icon" type="image/png" href="https://i.imgur.com/RCMBfPu.png">
 
-    <link
-            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/nha/css/Demo.css">
     <link rel="stylesheet" href="/Vinh/css/Footer.css">
     <link rel="stylesheet" href="/Vinh/css/Header.css">
@@ -65,7 +63,7 @@
                     <div class="card-body">
                         <div><a class="card__body-content" th:href="@{/ProfileDetail/__${account1.user.idUser}__}">Tài khoản của tôi</a></div>
                         <div><a class="card__body-content" th:href="@{/listOfInvoices/__${account1.user.idUser}__}">Đơn mua</a></div>
-                        <div><a class="card__body-content" th:href="@{/editPass/__${account1.userName}__}">Đổi mật khẩu</a></div>
+                        <div><a class="card__body-content" th:href="@{/editPass/__${account1.idAccount}__}">Đổi mật khẩu</a></div>
                     </div>
                 </div>
             </div>
@@ -80,8 +78,8 @@
         <div class="card-body">
             <form id="profileForm" class="css" th:object="${account1}" method="post"
                   th:action="@{/editPass}">
-                <input type="hidden" th:field="*{userName}">
-                <input type="hidden" th:field="*{description}">
+                <input type="hidden" th:field="*{idAccount}">
+
                 <input type="hidden" th:field="*{status}">
                 <input type="hidden" th:field="*{roles}">
                 <div class="form-group row">
@@ -95,7 +93,7 @@
                     <label class="col-lg-4 col-sm-4 col-form-label">Mật khẩu mới</label>
                     <div class="col-lg-8 col-sm-8">
                         <input id="psw-new" name="psw-new" type="password" class="form-control"
-                               required="true" value="" th:field="*{passWord}"></div>
+                               required="true" value="" th:field="*{password}"></div>
                 </div>
 
 
@@ -103,7 +101,7 @@
                     <label class="col-lg-4 col-sm-4 col-form-label">Xác nhận mật khẩu</label>
                     <div class="col-lg-8 col-sm-8">
                         <input id="psw-repeat" name="psw-repeat" type="password" class="form-control"
-                               required="true" value="" th:field="*{rePassWord}"></div>
+                               required="true" value="" th:field="*{rePassword}"></div>
                 </div>
 
                 <div class="button__layout" >

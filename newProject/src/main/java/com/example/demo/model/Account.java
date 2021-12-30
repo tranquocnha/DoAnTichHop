@@ -15,6 +15,17 @@ public class Account {
 //     @ManyToMany(mappedBy = "accounts",fetch = FetchType.EAGER)
 //    private Set<Role> roles;
 
+    public String getResetPasswordToken() {
+        return resetPasswordToken;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
+    }
+
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "accountRole" ,
             joinColumns = @JoinColumn(name = "idAccount") ,
