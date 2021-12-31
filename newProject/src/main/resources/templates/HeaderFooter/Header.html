@@ -21,48 +21,56 @@
 <body>
 
 <div class="header__container" th:fragment="header-cline">
-    <div class="header__top">
-        <div sec:authorize ="isAuthenticated()">
-            <button class="btn btn-primary " type="button"
-                    style="background-color: #FFCC20; border: 1px solid #FFCC20" sec:authorize="hasRole('ADMIN') or hasRole('SALER')">
-                <div class="header__management" sec:authorize="hasRole('ADMIN') or hasRole('SALER')">
-                    <i class="material-icons" title="Account" style="font-size: 25px;cursor: pointer;"
-                       data-uw-styling-context="true">person</i>
-                    <span class="caret"  th:if="${admin != null}">
+        <div class="header__top" sec:authorize ="isAuthenticated()">
+            <div class="header__top-right">
+                <a href="/auction">
+                    <button>
+                        <img src="/Images/icons8-auction-32.png" />
+                        Đấu giá
+                    </button>
+                </a>
+            </div>
+
+            <div class="header__top-left">
+                <button class="btn btn-primary " type="button"
+                        style="background-color: #FFCC20; border: 1px solid #FFCC20" sec:authorize="hasRole('ADMIN') or hasRole('SALER')">
+                    <div class="header__management" sec:authorize="hasRole('ADMIN') or hasRole('SALER')">
+                        <i class="material-icons" title="Account" style="font-size: 25px;cursor: pointer;"
+                           data-uw-styling-context="true">person</i>
+                        <span class="caret"  th:if="${admin != null}">
                         <a style="text-decoration: none; color:white"  href="/admin/">Quản lý</a>
                      </span>
 
-                    <span class="caret"  th:if="${admin==null}" >
+                        <span class="caret"  th:if="${admin==null}" >
                          <a  style="text-decoration: none; color:white"  href="/product/list">Truy cập đến shop</a>
                     </span>
-                </div>
-            </button>
+                    </div>
+                </button>
+            </div>
         </div>
-    </div>
     <div class="header__second">
 
         <div class="header__logo">
-            <!-- <img src="./Images/Logo-Neffex.png" alt=""> -->
             <a href="/">
-                <!--            <img src="/Images/SeekPng.com_pouring-milk-png_2829187.png" alt="">-->
                 <img src="/Images/Logo-Neffex.png" />
             </a>
         </div>
 
         <div class="header__search">
             <form method="get" action="/search" class="d-flex">
-                <input  placeholder="" class="header__search-input" type="search" name="nameProduct"
+                <input placeholder=" " class="header__search-input" type="search" name="nameProduct"
                         aria-label="Search">
                 <label class="header__search-label">Tìm kiếm</label>
                 <select name="idCategory" class="form-control mr-2 custom-select">
                     <option th:value="0">Tất cả danh mục</option>
                     <option th:each="danhmuc:${category}" th:text="${danhmuc.getCategoryName()}" th:value="${danhmuc.getIdCategory()}"></option>
                 </select>
-                <span class="header__span">
-                    <button type="submit">
-                     <img src="https://cdn.icon-icons.com/icons2/2566/PNG/512/search_icon_153438.png" alt="">
-                    </button>
-                </span>
+ <button class="header__search-button">
+            <img
+                    src="https://www.bidu.com.vn/images/icon/icon_search.svg"
+                    alt=""
+            />
+          </button>
             </form>
         </div>
         <div class="button__login" th:unless="${userNames}">

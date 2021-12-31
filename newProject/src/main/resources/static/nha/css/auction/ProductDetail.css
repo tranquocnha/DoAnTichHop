@@ -5,17 +5,12 @@
     margin: 60px auto 0px;
 }
 
-
-
-
 .page__layout {
     display: flex;
     /* margin-top: 60px; */
     box-shadow: 3px 3px 6px 10px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
-
 }
-
 
 .page__left {
     width: 50%;

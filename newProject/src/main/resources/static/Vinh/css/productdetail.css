@@ -1,7 +1,8 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Koh+Santepheap&display=swap'); */
-@import url('https://fonts.googleapis.com/css2?family=Scheherazade+New&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Scheherazade+New&display=swap');*/
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@200&display=swap');
 * {
     box-sizing: border-box;
+    font-family: 'Lexend', sans-serif;
 }
 
 body,h1,h2,h3,h4,h5,h6 {
@@ -248,7 +249,7 @@ body,h1,h2,h3,h4,h5,h6 {
 }
 
 .product__title {
-    color: #333;
+    color: #000;
     font-weight: 600;
 }
 
@@ -257,20 +258,17 @@ body,h1,h2,h3,h4,h5,h6 {
     align-items: center;
 }
 
+.product__price > h2 {
+    font-size: 40px;
+    color: #000;
+    margin: 0px;
+}
 
 .product__price > p {
-    color: #ffc220;
+    color: #000;
     font-size: 19px;
     font-weight: 900;
 }
-
-
-.product__price > p {
-    color: #ffc220;
-    font-size: 19px;
-    font-weight: 900;
-}
-
 
 .product__color {
     display: flex;
@@ -279,8 +277,20 @@ body,h1,h2,h3,h4,h5,h6 {
     padding: 19px 0px;
 }
 
+.product__color > h3 {
+    font-size: 20px;
+    color: #000;
+}
+
 .product__color-button {
+    display: flex;
+    align-items: center;
     margin-left: 15px;
+}
+
+
+.product__color-button label {
+    margin:0px;
 }
 
 .product__color-button > button {
@@ -291,13 +301,15 @@ body,h1,h2,h3,h4,h5,h6 {
     outline: none;
     cursor: pointer;
     width: 100px;
-    color: white;
+    color: #c9c9c9;
     background-color: #0071DC;
     font-size: 15px;
     font-weight: 550;
 }
 
-
+.color-choose {
+    margin:0px 18px 0px;
+}
 
 .product__quantity {
     display: flex;
@@ -305,7 +317,13 @@ body,h1,h2,h3,h4,h5,h6 {
     padding: 19px 0px;
 }
 
+.product__quantity > h3 {
+    font-size: 20px;
+    color: #000;
+}
+
 .product__quantity-button {
+    display: flex;
     margin-left: 15px;
 }
 
@@ -314,26 +332,42 @@ body,h1,h2,h3,h4,h5,h6 {
 }
 
 .product__quantity-button  button {
-    background-color: #fadb14;
-    border-radius: 5px;
-    outline: none;
-    width: 30px;
-    height: 30px;
+    color: #c9c9c9;
+    padding: 0 10px;
+    height: 36px;
+    min-width: 36px;
+    text-align: center;
+    line-height: 34px;
+    font-size: 14px;
     cursor: pointer;
+    outline: none;
 }
 
-.product__quantity-button  span {
+.product__quantity-button button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 7px 14px rgb(50 50 93 / 10%), 0 3px 6px rgb(0 0 0 / 8%);
+}
+
+.product__quantity-button >button > span {
     font-size: 18px;
-    color: #474747;
+    color: #c9c9c9;
 }
 
 .product__quantity-button  input {
-    height: 30px;
-    margin: 0px 5px;
-    border-radius: 5px;
+    width: 60px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000;
     text-align: center;
-    outline: none;
-    border: 1px solid #CCC;
+    border: none;
+}
+
+.product__quantity-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .space__add  {
@@ -352,6 +386,10 @@ body,h1,h2,h3,h4,h5,h6 {
     font-size: 16px;
     font-weight: 600;
     box-shadow: 3px 6px 10px rgba(0,0,0,0.3);
+}
+
+.radioBox {
+    cursor: pointer;
 }
 
 .product__add {
