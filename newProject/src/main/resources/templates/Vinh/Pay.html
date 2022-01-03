@@ -26,56 +26,46 @@
 
 <div class="main-contaner ">
   <div class="main-content ">
-    <form action="/bill/pay" method="get" th:object="${bill}">
+    <form action="/bill/pay" method="get" th:object="${accUser}">
     <div class="checkout-main-left">
       <div class="checkout-bill_content">
-        <input type="hidden" th:field="*{idBill}">
-        <input type="hidden" th:field="*{user}">
-        <input type="hidden" th:field="*{status}">
-        <input type="hidden" th:field="*{totalCost}">
-        <input type="hidden" th:field="*{current}">
+        <input type="hidden" th:field="*{account.idAccount}">
+        <input type="hidden" th:field="*{name}">
+        <input type="hidden" th:field="*{sex}">
+        <input type="hidden" th:field="*{dateOfBirth}">
+        <input type="hidden" th:field="*{idUser}">
+        <input type="hidden" th:field="*{numberCard}">
+        <input type="hidden" th:field="*{auctionUsers}">
+        <input type="hidden" th:field="*{bills}">
+        <input type="hidden" th:field="*{address}">
         <div class="bill-title">
           <h2 >Địa chỉ nhận hàng</h2>
         </div>
-
         <div class="bill-name_info">
           <div class="input-content">
             <label >
               Địa chỉ email
               <span style="color:red">*</span>
             </label>
-            <input type="text" placeholder="Địa chỉ email" name="email" th:field="*{user.gmail}" />
-            <div class="text-warning"></div> <!-- Hien thi loi -->
+            <input type="text" placeholder="Địa chỉ email" name="email" th:field="*{gmail}" />
+            <div class="text-warning"></div>
           </div>
-
           <div class="input-content">
             <label >
               Số điện thoại
               <span style="color:red">*</span>
             </label>
-            <input type="text" placeholder="Số điện thoại" name="phone" />
+            <input type="text" placeholder="Số điện thoại" name="phone" th:field="*{phoneUser}" />
             <div class="text-warning"></div> <!-- Hien thi loi -->
           </div>
 
-<!--          <div class="input-content">-->
-<!--            <label >-->
-<!--              Địa chỉ-->
-<!--              <span style="color:red">*</span>-->
-<!--            </label>-->
-<!--            <input type="text" placeholder="Địa chỉ" name="address" th:field="*{addressOder}"/>-->
-<!--            <div class="text-warning"></div> &lt;!&ndash; Hien thi loi &ndash;&gt;-->
-<!--          </div>-->
         </div>
       </div>
     </div>
-
-
     <div class="checkout-main-right">
       <div class="checkout-title">
         <h2>Gói hàng</h2>
       </div>
-
-
       <div class="checkout_cart-container">
         <div class="checkout_cart-subtitle">
           <h2>Sản phẩm</h2>
@@ -105,7 +95,6 @@
     </form>
   </div>
 </div>
-
 
 <!-- Footer -->
 

@@ -192,39 +192,38 @@ public class CartController {
         return "redirect:/showCart";
     }
 
-    @GetMapping("/hoaDon/layDuLieu/{id}")
-    public String getHoaDon(@PathVariable int id, Model model, @SessionAttribute("carts") HashMap<Integer, Cart> cartMap) {
-        if (cartMap == null) {
-            cartMap = new HashMap<>();
-        }
-        Color color = colorService.findById(id);
-        if (color != null) {
-            color.setQuantity(color.getQuantity() - totalQuantity);
-            if (color.getQuantity() <= 0) {
-                color.setStatus("Out of product"); // thay ham xoa cx dc
-            }
-            colorService.save(color);
-            if (cartMap.containsKey(id)) {
-                Cart item = cartMap.get(id);
-                item.setColor(color);
-                item.setQuantity(item.getQuantity() + totalQuantity);
-                item.setMaxPrice(totalMoney);
-                cartMap.put(id, item);
-            } else {
-                Cart cart = new Cart();
-                cart.setColor(color);
-                cart.setQuantity(totalQuantity);
-                cart.setMaxPrice(totalMoney);
-                cartMap.put(id, cart);
-            }
-        }
-        model.addAttribute("bill", new Bill());
-        model.addAttribute("carts", cartMap);
-        return "Vinh/Pay";
-    }
+//    @GetMapping("/hoaDon/layDuLieu/{id}")
+//    public String getHoaDon(@PathVariable int id, Model model, @SessionAttribute("carts") HashMap<Integer, Cart> cartMap) {
+//        if (cartMap == null) {
+//            cartMap = new HashMap<>();
+//        }
+//        Color color = colorService.findById(id);
+//        if (color != null) {
+//            color.setQuantity(color.getQuantity() - totalQuantity);
+//            if (color.getQuantity() <= 0) {
+//                color.setStatus("Out of product"); // thay ham xoa cx dc
+//            }
+//            colorService.save(color);
+//            if (cartMap.containsKey(id)) {
+//                Cart item = cartMap.get(id);
+//                item.setColor(color);
+//                item.setQuantity(item.getQuantity() + totalQuantity);
+//                item.setMaxPrice(totalMoney);
+//                cartMap.put(id, item);
+//            } else {
+//                Cart cart = new Cart();
+//                cart.setColor(color);
+//                cart.setQuantity(totalQuantity);
+//                cart.setMaxPrice(totalMoney);
+//                cartMap.put(id, cart);
+//            }
+//        }
+//        model.addAttribute("carts", cartMap);
+//        return "Vinh/Pay";
+//    }
 
     @GetMapping("/bill/pay")
-    public String thanhToan(@SessionAttribute("carts") HashMap<Integer, Cart> cartMap, @ModelAttribute Bill bill, Model model) {
+    public String thanhToan(@SessionAttribute("carts") HashMap<Integer, Cart> cartMap, @ModelAttribute Bill bill,AccUser accUser, Model model) {
         Double inputTotal = sumTotalMoney;
         List<String> nameProduct = new ArrayList<>();
         for (Map.Entry<Integer, Cart> entry : cartMap.entrySet()) {
@@ -248,6 +247,7 @@ public class CartController {
             productBill.setProduct(value.getProduct());
             billService.saveDetail(productBill);
         }
+        userService.save(accUser);
         model.addAttribute("inputTotal",inputTotal);
         model.addAttribute("carts",cartMap);
         model.addAttribute("orderDetail", orderDetail);

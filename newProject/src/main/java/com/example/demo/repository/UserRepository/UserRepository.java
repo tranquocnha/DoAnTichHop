@@ -17,4 +17,5 @@ public interface UserRepository extends JpaRepository<AccUser, Integer> {
 
     Page<AccUser> findByName(String userName, Pageable pageable);
 
+    AccUser findByName(String name);
 }

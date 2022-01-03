@@ -21,4 +21,6 @@ public interface UserService {
     List<AccUser> findByEmail(String email);
 
     Page<AccUser> findByName(String nameUser, Pageable pageable);
+
+    AccUser findByName(String name);
 }
