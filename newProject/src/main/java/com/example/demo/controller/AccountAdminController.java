@@ -36,13 +36,24 @@ public class AccountAdminController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return userRepo.findByAccount_IdAccount(auth.getName());
     }
-
+    @ModelAttribute("admin")
+    public String AdminOrSaler(){
+        Authentication  auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getAuthorities().toString().equals("[ROLE_ADMIN]")){
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
+                return "là admin";
+            }
+        }else{
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().
+                    anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
+                return "là saler";
+            }
+        }
+        return null;
+    }
     @RequestMapping("/account")
     public String listAll(@RequestParam(defaultValue = "0") int page, Principal principal, Model model){
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
-            model.addAttribute("admin", "là admin");
-        }
         Page<AccUser> userPage;
         Pageable pageable = PageRequest.of(page,5);
         userPage = userService.findByAlAndAccountRoleAndAccountAndAccUserAndAddress(pageable);
@@ -58,10 +69,6 @@ public class AccountAdminController {
     public String getList(@RequestParam(defaultValue = "0") int page, @RequestParam String nameUser, @RequestParam String address,
                           Principal principal, Model model) {
 //        Page<AccUser> users;
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
-            model.addAttribute("admin", "là admin");
-        }
         Page<Address> addresses;
         Pageable pageableSort = PageRequest.of(page, 5);
          //tim kiem
@@ -86,10 +93,6 @@ public class AccountAdminController {
 
     @GetMapping("/add_member")
     public String create(Model model, Principal principal) {
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
-            model.addAttribute("admin", "là admin");
-        }
         model.addAttribute("user", new AccUser());
         return "nha/admin/AccountAdd";
     }
@@ -109,10 +112,6 @@ public class AccountAdminController {
     }
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable int id, Model model, Principal principal) {
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
-            model.addAttribute("admin", "là admin");
-        }
         AccUser user = userService.findById(id);
         model.addAttribute("findUser", userService.findById(id));
         model.addAttribute("userName", user.getName());
@@ -121,10 +120,6 @@ public class AccountAdminController {
 
     @PostMapping("/edit_member")
     public String edit(@ModelAttribute("user") AccUser user, Model model, RedirectAttributes redirectAttributes, Principal principal) {
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
-            model.addAttribute("admin", "là admin");
-        }
         userService.save(user);
         redirectAttributes.addFlashAttribute("success", "Updated!");
         model.addAttribute("userName", user.getName());

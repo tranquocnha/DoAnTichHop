@@ -60,13 +60,24 @@ public class AuctionController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return userRepo.findByAccount_IdAccount(auth.getName());
     }
-
+    @ModelAttribute("admin")
+    public String AdminOrSaler(){
+        Authentication  auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getAuthorities().toString().equals("[ROLE_ADMIN]")){
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
+                return "là admin";
+            }
+        }else{
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().
+                    anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
+                return "là saler";
+            }
+        }
+        return null;
+    }
     @RequestMapping("/auction")
     public String index(Model model) {
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
-            model.addAttribute("admin", "là admin");
-        }
         List<Category> categoryList;
         categoryList = categoryService.findAll();
         model.addAttribute("category", categoryList);
@@ -90,10 +101,6 @@ public class AuctionController {
     }
     @RequestMapping("/afterLogin/auction/")
     public String afterLogin(Model model, Principal principal) {
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
-            model.addAttribute("admin", "là admin");
-        }
         List<Category> categoryList;
         categoryList = categoryService.findAll();
         model.addAttribute("category", categoryList);

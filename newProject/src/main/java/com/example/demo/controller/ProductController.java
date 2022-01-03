@@ -12,6 +12,7 @@ import com.example.demo.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,17 +43,30 @@ public class ProductController {
 
     @Autowired
     ColorService colorService;
-
-
+    @ModelAttribute("userNames")
+    public AccUser getDauGia() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userRepo.findByAccount_IdAccount(auth.getName());
+    }
+    @ModelAttribute("admin")
+    public String AdminOrSaler(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getAuthorities().toString().equals("[ROLE_ADMIN]")){
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
+                return "là admin";
+            }
+        }else{
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().
+                    anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
+                return "là saler";
+            }
+        }
+        return null;
+    }
     @GetMapping(value = "/product/list")
     public String user(Model model, Principal principal, @PageableDefault(size = 5) Pageable pageable) {
         String userName = principal.getName();
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
-            model.addAttribute("saler", "là saler");
-        }
-        AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
-        model.addAttribute("userNames", user);
         model.addAttribute("listProduct", colorService.findAllProduct(userName));
         return "/vuong/ListProductSaler";
     }
@@ -60,12 +74,6 @@ public class ProductController {
     @GetMapping(value = "/product/listApproved")
     public String userNotApprovedYet(Product product, Model model, Principal principal) {
         String userName = principal.getName();
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
-            model.addAttribute("admin", "là admin");
-        }
-        AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
-        model.addAttribute("userNames", user);
         model.addAttribute("listSP", colorService.findAllApprovedProduct("Chưa duyệt", userName));
         return "/vuong/listchuaduyet";
     }
@@ -73,23 +81,13 @@ public class ProductController {
     @GetMapping(value = "/product/upProductMoney")
     public String formUpdateProduct(Product product, Model model , Principal principal) {
         String userName = principal.getName();
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().
-                anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
-            model.addAttribute("saler" , "là saler");
-        }
-        AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
+
         model.addAttribute("listSP", productService.findAllByNotApprovedYet("No money", userName));
         return "/vuong/listNoUpdateMoney";
     }
 
     @GetMapping(value = "/product/waitList")
-    public String formWaitList(Color color, Model model , Principal principal) {
-        String userName = principal.getName();
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().
-                anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
-            model.addAttribute("saler" , "là saler");
-        }
-        AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
+    public String formWaitList( Model model , Principal principal) {
         model.addAttribute("listProductColor", colorService.findByProduct_Status("No money"));
         return "/vuong/waitList";
     }
@@ -98,12 +96,6 @@ public class ProductController {
     @GetMapping(value = "/product/NotApprove")
     public String userNotApprove(Product product, Model model, Principal principal) {
         String userName = principal.getName();
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
-            model.addAttribute("admin", "là admin");
-        }
-        AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
-        model.addAttribute("userNames", user);
         model.addAttribute("listSP", productService.findAllByNotApprovedYet("Không duyệt", userName));
         return "/vuong/listkhongduyet";
     }
@@ -114,12 +106,6 @@ public class ProductController {
         LocalDate localDate = LocalDate.now();
         product.setDatePost(localDate.toString());
         model.addAttribute("products", product);
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
-            model.addAttribute("saler", "là saler");
-        }
-        AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
-        model.addAttribute("userNames", user);
         model.addAttribute("userName", principal.getName());
         model.addAttribute("account", accountService.findAll());
         model.addAttribute("category", categoryService.findAll());
@@ -137,14 +123,9 @@ public class ProductController {
         String dateFormat = format.format(date);
         System.out.println("create product" + product);
         String idAccount = principal.getName();
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
-            model.addAttribute("saler", "là saler");
-        }
+
         product.setAccounts(new Account(idAccount));
         if (bindingResult.hasFieldErrors()) {
-            AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
-            model.addAttribute("userNames", user);
             model.addAttribute("userName", principal.getName());
             model.addAttribute("account", accountService.findAll());
             model.addAttribute("category", categoryService.findAll());
@@ -153,8 +134,6 @@ public class ProductController {
             return "/vuong/create_nguoidung";
         }
         this.productService.save(product);
-        AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
-        model.addAttribute("userNames", user);
         model.addAttribute("listProduct", colorService.findAllProduct(idAccount));
         model.addAttribute("mgs", "thêm mới sản phẩm thành công");
         return "/vuong/ListProductSaler";
@@ -195,20 +174,12 @@ public class ProductController {
     @PostMapping(value = "/product/productDone")
     public String createColor(@ModelAttribute("colors") Color color , BindingResult bindingResult , Model model , Principal principal){
         String idAccount = principal.getName();
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
-            model.addAttribute("saler", "là saler");
-        }
         if (bindingResult.hasFieldErrors()) {
-            AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
-            model.addAttribute("userNames", user);
             model.addAttribute("userName", principal.getName());
             model.addAttribute("notApprovedYet", "notUpdate");
             return "/vuong/create_color";
         }
         this.colorService.save(color);
-        AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
-        model.addAttribute("userNames", user);
         model.addAttribute("listProduct", colorService.findAllProduct(idAccount));
         model.addAttribute("mgs", "thêm mới sản phẩm thành công");
         return "/vuong/ListProductSaler";
@@ -216,12 +187,6 @@ public class ProductController {
 
     @GetMapping(value = "product/edit")
     public String viewEdit(@RequestParam("id") Integer id, Model model, Principal principal) {
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
-            model.addAttribute("saler", "là saler");
-        }
-        AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
-        model.addAttribute("userNames", user);
         model.addAttribute("products", productService.findById(id));
         model.addAttribute("category", categoryService.findAll());
         model.addAttribute("notApprovedYet11" , "Chưa duyệt");
@@ -232,18 +197,12 @@ public class ProductController {
     @PostMapping(value = "/product/edit")
     public String Edit(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult, Model model, Principal principal) {
         String idAccount = principal.getName();
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
-            model.addAttribute("admin", "là admin");
-        }
         AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
 //        new Product().validate(product, bindingResult);
         if (bindingResult.hasFieldErrors()) {
-            model.addAttribute("userNames", user);
             model.addAttribute("category", categoryService.findAll());
             return "/vuong/edit";
         }
-        model.addAttribute("userNames", user);
         model.addAttribute("product", colorService.findAllProduct(idAccount));
         model.addAttribute("category", categoryService.findAll());
         this.productService.save(product);
@@ -258,12 +217,6 @@ public class ProductController {
     public String deleteProduct(@PathVariable Integer idProduct, Model model, Principal principal) {
         this.productService.delete(idProduct);
         String idAccount = principal.getName();
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
-            model.addAttribute("saler", "là saler");
-        }
-        AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
-        model.addAttribute("userNames", user);
         model.addAttribute("listProduct", colorService.findAllProduct(idAccount));
         model.addAttribute("mgsdelete", "Xóa sản phẩm thành công!");
         return "/vuong/ListProductSaler";
@@ -272,21 +225,14 @@ public class ProductController {
     @GetMapping("product/searchWaitingApproval")
     public String searchWaitingApproval(@RequestParam("nameProduct") String nameProduct, Model model, Principal principal) {
         String userName = principal.getName();
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
-            model.addAttribute("saler", "là saler");
-        }
-        AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
         List<Product> products = productService.findByNotApprovedYet("Chưa duyệt", userName, nameProduct);
         if (products.size() == 0) {
             System.out.println("Đang rỗng nè coi đo dai bao nhieu nao  ====================" + products.size());
-            model.addAttribute("userNames", user);
             model.addAttribute("products", products);
             model.addAttribute("mgstk", "Không tìm thấy sản phẩm");
             return "/vuong/listchuaduyet";
         } else {
             System.out.println("Đang rỗng nè coi đo dai bao nhieu nao  ====================" + products.size());
-            model.addAttribute("userNames", user);
             model.addAttribute("products", products);
             model.addAttribute("mgstk1", "sản phẩm được tìm thấy");
             return "/vuong/listchuaduyet";
@@ -297,21 +243,13 @@ public class ProductController {
     public String search(@RequestParam("nameProduct") String nameProduct,
                          Model model, Principal principal) {
         String idAccount = principal.getName();
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
-            model.addAttribute("saler", "là saler");
-        }
-        AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
         List<Product> products = productService.findByNameProduct(idAccount, nameProduct);
         if (products.size() == 0) {
             System.out.println("Đang rỗng nè coi đo dai bao nhieu nao  ====================" + products.size());
-            model.addAttribute("userNames", user);
             model.addAttribute("products", products);
             model.addAttribute("mgstk", "Không tìm thấy sản phẩm");
             return "/vuong/ListProductSaler";
         } else {
-            System.out.println("Đang rỗng nè coi đo dai bao nhieu nao  ====================" + products.size());
-            model.addAttribute("userNames", user);
             model.addAttribute("products", products);
             model.addAttribute("mgstk1", "sản phẩm được tìm thấy");
             return "/vuong/ListProductSaler";

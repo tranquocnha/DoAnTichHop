@@ -9,9 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -44,7 +47,27 @@ public class PaymentController {
     public static int totalQuantity = 0;
     public static ProductBill productDetailBill = new ProductBill();
     public static HashMap<Double, Product> listProductBillTemp = new HashMap<>();
-
+    @ModelAttribute("admin")
+    public String AdminOrSaler(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getAuthorities().toString().equals("[ROLE_ADMIN]")){
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
+                return "là admin";
+            }
+        }else{
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().
+                    anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
+                return "là saler";
+            }
+        }
+        return null;
+    }
+    @ModelAttribute("userNames")
+    public AccUser getDauGia() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userRepo.findByAccount_IdAccount(auth.getName());
+    }
     @GetMapping("/bill/getData")
     public String getHoaDon(@RequestParam String total, @RequestParam String quantity, Model model,
                             @SessionAttribute("carts") HashMap<Integer, Cart> cartMap) {

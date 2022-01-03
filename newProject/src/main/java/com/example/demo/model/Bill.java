@@ -23,7 +23,6 @@ public class Bill {
     public Bill() {
     }
 
-
     public Bill(int idBill, String current, double totalCost, String status, AccUser user, Set<ProductBill> productBills) {
         this.idBill = idBill;
         this.current = current;

@@ -36,14 +36,25 @@ public class AdminAuctionController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return userRepo.findByAccount_IdAccount(auth.getName());
     }
-
+    @ModelAttribute("admin")
+    public String AdminOrSaler(){
+        Authentication  auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getAuthorities().toString().equals("[ROLE_ADMIN]")){
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
+                return "là admin";
+            }
+        }else{
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().
+                    anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
+                return "là saler";
+            }
+        }
+        return null;
+    }
     @GetMapping("/auction/list")
     public String listAuction(@RequestParam(defaultValue = "0") int page,
                               Optional<String> nameProduct, Optional<String> auctionTime, Model model){
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
-            model.addAttribute("admin", "là admin");
-        }
         Pageable pageableSort = PageRequest.of(page, 5);
         if(!nameProduct.isPresent()){
             if(auctionTime.isPresent()){
@@ -75,10 +86,6 @@ public class AdminAuctionController {
 
     @GetMapping("/auction/edit/{idAuction}")
     public String editAuction(@PathVariable int idAuction, Model model){
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
-            model.addAttribute("admin", "là admin");
-        }
         model.addAttribute("auction",auctionService.findById(idAuction));
         return "/nha/admin/auction/edit";
     }

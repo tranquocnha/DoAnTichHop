@@ -55,13 +55,25 @@ public class BillController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return userRepo.findByAccount_IdAccount(auth.getName());
     }
-
+    @ModelAttribute("admin")
+    public String AdminOrSaler(){
+        Authentication  auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getAuthorities().toString().equals("[ROLE_ADMIN]")){
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
+                return "là admin";
+            }
+        }else{
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().
+                    anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
+                return "là saler";
+            }
+        }
+        return null;
+    }
     @RequestMapping("/")
     public String index(Model model) {
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
-            model.addAttribute("admin", "là admin");
-        }
+
         List<Category> categoryList;
         categoryList = categoryService.findAll();
         model.addAttribute("category", categoryList);
@@ -86,10 +98,7 @@ public class BillController {
 
     @RequestMapping("/afterLogin")
     public String afterLogin(Model model, Principal principal) {
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
-            model.addAttribute("admin", "là admin");
-        }
+
         List<Category> categoryList;
         categoryList = categoryService.findAll();
         model.addAttribute("category", categoryList);
@@ -129,10 +138,9 @@ public class BillController {
         return "Vinh/ProductDetail";
     }
 
-    @RequestMapping("afterLogin/productDetail/{id}")
+    @RequestMapping("afterLogin/product-detail/{id}")
     public String afterLoginProductDetailBill(@PathVariable int id, Model model, @SessionAttribute("carts") HashMap<Integer, Cart> cartMap) {
-        Product product;
-        product = productService.findById(id);
+        Product product = productService.findById(id);
         //Truyền idproduct để hiện color
         List<Color> colorList = colorService.findByIdProduct(id);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -142,7 +150,7 @@ public class BillController {
         model.addAttribute("color", colorList);
         model.addAttribute("product", product);
         model.addAttribute("cartMap", cartMap);
-        return "redirect:/productDetail/" + id;
+        return "redirect:/product-detail/"+id;
     }
 
     @GetMapping("/search")

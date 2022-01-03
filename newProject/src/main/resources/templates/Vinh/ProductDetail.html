@@ -52,8 +52,8 @@
             <div class="page__right">
                 <h1 class="product__title" th:text="${product.productName}"></h1>
                 <div class="product__price" >
-                    <p id="priceProduct">1</p>
-                    <p style="margin-left: 10px">USD</p>
+                    <p id="priceProduct"></p>
+                    <p style="margin-left: 10px"></p>
                 </div>
                 <div class="product__color">
                     <h3>Màu Sắc:</h3>
@@ -81,7 +81,7 @@
                         </button>
                         <div class="product__quantity-input">
                             <div>
-                                <input type="text" value="1" name="soluongs" id="count" readonly="readonly"/>
+                                <input type="text" value="0" name="soluongs" id="count" readonly="readonly"/>
                                 <input type="text" style="display: none" id="countMax"/>
                             </div>
                         </div>
@@ -272,7 +272,7 @@
     // Khai báo  function
 
     let countElement = document.getElementById('count');
-    let index = 1;
+    let index = 0;
 
     function handleDescrease(){
         quantityModel();

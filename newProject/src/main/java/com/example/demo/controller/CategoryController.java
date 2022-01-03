@@ -30,10 +30,24 @@ public class CategoryController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return userRepo.findByAccount_IdAccount(auth.getName());
     }
-    
+    @ModelAttribute("admin")
+    public String AdminOrSaler(){
+        Authentication  auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getAuthorities().toString().equals("[ROLE_ADMIN]")){
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
+                return "là admin";
+            }
+        }else{
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().
+                    anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
+                return "là saler";
+            }
+        }
+        return null;
+    }
     @GetMapping(value = "/category/list")
     private String viewList(Model model, Principal principal) {
-    
         model.addAttribute("category", categoryService.findAll());
         return "/nha/category/list";
     }

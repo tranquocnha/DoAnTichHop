@@ -78,7 +78,7 @@
                 </td>
                 <td class="total-price">
                     <input type="hidden" th:id="totalMoney+${iterStat.count}"  th:value="${item.value.maxPrice}">
-                    <div th:id="totalMoneySubmit+${iterStat.count}" th:text="${#numbers.formatDecimal(item.value.maxPrice, 0, 'POINT', 0, 'COMMA')}+' VND'"></div>
+                    <div th:id="totalMoneySubmit+${iterStat.count}" th:text="${item.value.maxPrice}+' USD'"></div>
                 </td>
 
                 <td class="product-remove">

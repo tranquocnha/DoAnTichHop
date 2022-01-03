@@ -37,11 +37,11 @@
                     <div class="header__management" sec:authorize="hasRole('ADMIN') or hasRole('SALER')">
                         <i class="material-icons" title="Account" style="font-size: 25px;cursor: pointer;"
                            data-uw-styling-context="true">person</i>
-                        <span class="caret"  th:if="${admin != null}">
+                        <span class="caret"  th:if="${admin == 'là admin'}">
                         <a style="text-decoration: none; color:white"  href="/admin/">Quản lý</a>
                      </span>
 
-                        <span class="caret"  th:if="${admin==null}" >
+                        <span class="caret"  th:if="${admin == 'là saler'}" >
                          <a  style="text-decoration: none; color:white"  href="/product/list">Truy cập đến shop</a>
                     </span>
                     </div>

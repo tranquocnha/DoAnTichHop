@@ -20,7 +20,7 @@ for (let i = 1;i<=indexMaxElement.length; i++) {
     console.log(number +" "+input+" " + typeof(number));
     maxtotal+=input;
 }
-submitTotalMax.value = maxtotal.toLocaleString() + " " + 'VND';  
+submitTotalMax.value = maxtotal.toLocaleString() + " " + 'USD';  
 submitTotalMax1.value = maxtotal
 //lay tong so luong
 var maxquantily=0;
@@ -50,8 +50,8 @@ for(let index = 1;index<=indexMaxElement.length;index++){
             maxtotal -= priceTotalElement1;
             console.log(quantityAction1);
             document.getElementById('submitQuantily1').value = quantityAction1;
-            document.getElementById('totalMoneySubmit1').innerText = totalAction1.toLocaleString() + " " + 'VND';
-            submitTotalMax.value = maxtotal.toLocaleString() + " " + 'VND';  
+            document.getElementById('totalMoneySubmit1').innerText = totalAction1.toLocaleString() + " " + 'USD';
+            submitTotalMax.value = maxtotal.toLocaleString() + " " + 'USD';  
             submitTotalMax1.value = maxtotal;
             maxquantily -=1;
             submitQuantily.value = maxquantily;
@@ -67,8 +67,8 @@ for(let index = 1;index<=indexMaxElement.length;index++){
         totalAction1 = totalAction1 + priceTotalElement1
         maxtotal += priceTotalElement1;
         document.getElementById('submitQuantily1').value = quantityAction1;
-        document.getElementById('totalMoneySubmit1').innerText = totalAction1.toLocaleString() + " " + 'VND';
-        submitTotalMax.value = maxtotal.toLocaleString() + " " + 'VND';  
+        document.getElementById('totalMoneySubmit1').innerText = totalAction1.toLocaleString() + " " + 'USD';
+        submitTotalMax.value = maxtotal.toLocaleString() + " " + 'USD';  
             submitTotalMax1.value = maxtotal
             maxquantily +=1;
             submitQuantily.value = maxquantily;
@@ -93,8 +93,8 @@ for(let index = 1;index<=indexMaxElement.length;index++){
             maxtotal -= priceTotalElement2;
             console.log(quantityAction2);
             document.getElementById('submitQuantily2').value = quantityAction2;
-            document.getElementById('totalMoneySubmit2').innerText = totalAction2.toLocaleString() + " " + 'VND';
-            submitTotalMax.value = maxtotal.toLocaleString() + " " + 'VND';  
+            document.getElementById('totalMoneySubmit2').innerText = totalAction2.toLocaleString() + " " + 'USD';
+            submitTotalMax.value = maxtotal.toLocaleString() + " " + 'USD';  
 submitTotalMax1.value = maxtotal
             maxquantily -=1;
             submitQuantily.value = maxquantily;
@@ -111,8 +111,8 @@ submitTotalMax1.value = maxtotal
             maxtotal += priceTotalElement2;
             console.log(quantityAction2);
             document.getElementById('submitQuantily2').value = quantityAction2;
-            document.getElementById('totalMoneySubmit2').innerText = totalAction2.toLocaleString() + " " + 'VND';
-            submitTotalMax.value = maxtotal.toLocaleString() + " " + 'VND';  
+            document.getElementById('totalMoneySubmit2').innerText = totalAction2.toLocaleString() + " " + 'USD';
+            submitTotalMax.value = maxtotal.toLocaleString() + " " + 'USD';  
 submitTotalMax1.value = maxtotal
             maxquantily +=1;
             submitQuantily.value = maxquantily;
@@ -137,8 +137,8 @@ submitTotalMax1.value = maxtotal
             maxtotal -= priceTotalElement3;
             console.log(quantityAction3);
             document.getElementById('submitQuantily3').value = quantityAction3;
-            document.getElementById('totalMoneySubmit3').innerText = totalAction3.toLocaleString() + " " + 'VND';
-            submitTotalMax.innerHTML = maxtotal.toLocaleString() + " " + 'VND';
+            document.getElementById('totalMoneySubmit3').innerText = totalAction3.toLocaleString() + " " + 'USD';
+            submitTotalMax.innerHTML = maxtotal.toLocaleString() + " " + 'USD';
             maxquantily -=1;
             submitQuantily.innerHTML = maxquantily;
         }else{
@@ -152,8 +152,8 @@ submitTotalMax1.value = maxtotal
         console.log(quantityAction3);
         maxtotal += priceTotalElement3;
         document.getElementById('submitQuantily3').value = quantityAction3;
-        document.getElementById('totalMoneySubmit3').innerText = totalAction3.toLocaleString() + " " + 'VND';
-            submitTotalMax.value = maxtotal.toLocaleString() + " " + 'VND';  
+        document.getElementById('totalMoneySubmit3').innerText = totalAction3.toLocaleString() + " " + 'USD';
+            submitTotalMax.value = maxtotal.toLocaleString() + " " + 'USD';  
 submitTotalMax1.value = maxtotal
             maxquantily +=1;
             submitQuantily.value = maxquantily;
@@ -178,8 +178,8 @@ submitTotalMax1.value = maxtotal
             console.log(quantityAction4);
             maxtotal -= priceTotalElement4;
             document.getElementById('submitQuantily4').value = quantityAction4;
-            document.getElementById('totalMoneySubmit4').innerText = totalAction4.toLocaleString() + " " + 'VND';
-            submitTotalMax.value = maxtotal.toLocaleString() + " " + 'VND';  
+            document.getElementById('totalMoneySubmit4').innerText = totalAction4.toLocaleString() + " " + 'USD';
+            submitTotalMax.value = maxtotal.toLocaleString() + " " + 'USD';  
 submitTotalMax1.value = maxtotal
             maxquantily -=1;
             submitQuantily.value = maxquantily;
@@ -194,8 +194,8 @@ submitTotalMax1.value = maxtotal
         console.log(quantityAction4);
             maxtotal += priceTotalElement4;
         document.getElementById('submitQuantily4').value = quantityAction4;
-        document.getElementById('totalMoneySubmit4').innerText = totalAction4.toLocaleString() + " " + 'VND';
-            submitTotalMax.value = maxtotal.toLocaleString() + " " + 'VND';  
+        document.getElementById('totalMoneySubmit4').innerText = totalAction4.toLocaleString() + " " + 'USD';
+            submitTotalMax.value = maxtotal.toLocaleString() + " " + 'USD';  
 submitTotalMax1.value = maxtotal
             maxquantily +=1;
             submitQuantily.value = maxquantily;
@@ -220,8 +220,8 @@ submitTotalMax1.value = maxtotal
             console.log(quantityAction5);
             maxtotal -= priceTotalElement5;
             document.getElementById('submitQuantily5').value = quantityAction5;
-            document.getElementById('totalMoneySubmit5').innerText = totalAction5.toLocaleString() + " " + 'VND';
-            submitTotalMax.value = maxtotal.toLocaleString() + " " + 'VND';  
+            document.getElementById('totalMoneySubmit5').innerText = totalAction5.toLocaleString() + " " + 'USD';
+            submitTotalMax.value = maxtotal.toLocaleString() + " " + 'USD';  
 submitTotalMax1.value = maxtotal
             maxquantily -=1;
             submitQuantily.value = maxquantily;
@@ -236,8 +236,8 @@ submitTotalMax1.value = maxtotal
         console.log(quantityAction5);
             maxtotal += priceTotalElement5;
         document.getElementById('submitQuantily5').value = quantityAction5;
-        document.getElementById('totalMoneySubmit5').innerText = totalAction5.toLocaleString() + " " + 'VND';
-            submitTotalMax.value = maxtotal.toLocaleString() + " " + 'VND';  
+        document.getElementById('totalMoneySubmit5').innerText = totalAction5.toLocaleString() + " " + 'USD';
+            submitTotalMax.value = maxtotal.toLocaleString() + " " + 'USD';  
 submitTotalMax1.value = maxtotal
             maxquantily +=1;
             submitQuantily.value = maxquantily;

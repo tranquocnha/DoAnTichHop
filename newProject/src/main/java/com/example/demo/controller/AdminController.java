@@ -1,13 +1,17 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.AccUser;
+import com.example.demo.model.Color;
 import com.example.demo.model.Product;
 import com.example.demo.repository.UserRepository.UserRepository;
 import com.example.demo.service.categoryService.CategoryService;
+import com.example.demo.service.colorService.ColorService;
 import com.example.demo.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +25,12 @@ import java.util.List;
 public class AdminController {
     @Autowired
     UserRepository userRepo;
-
     @Autowired
     ProductService productService;
-
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    ColorService colorService;
 
     @GetMapping(value="")
     public String AdminHome(Model model, Principal principal) {
@@ -35,7 +39,22 @@ public class AdminController {
         model.addAttribute("userNames", user);
         return "/nha/admin/HomeAdmin";
     }
-
+    @ModelAttribute("admin")
+    public String AdminOrSaler(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getAuthorities().toString().equals("[ROLE_ADMIN]")){
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
+                return "là admin";
+            }
+        }else{
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().
+                    anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
+                return "là saler";
+            }
+        }
+        return null;
+    }
     @GetMapping(value = "/list")
     public String AdminList(@RequestParam(value = "page", defaultValue = "1") int page, Model model, Principal principal) {
         AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
@@ -71,7 +90,21 @@ public class AdminController {
         model.addAttribute("product", productService.findByStatus("Chưa duyệt"));
         return "nha/admin/DuyetProduct";
     }
-
+    @GetMapping(value = "/approve-color/{idProduct}")
+    public String AdminColorApprove(@PathVariable(value = "idProduct") int idProduct,Model model, Principal principal) {
+        AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
+        model.addAttribute("userNames", user);
+        model.addAttribute("listColor",colorService.findByIdProduct(idProduct));
+        return "nha/admin/DuyetProductListColor";
+    }
+    @PostMapping(value = "/approve-color/delete/{idColor}/{idProduct}")
+    public String AdminColorApproveDelete(@PathVariable(value = "idColor") int idColor,
+                                          @PathVariable(value = "idProduct") int idProduct,
+                                          RedirectAttributes redirectAttributes){
+        colorService.delete(idColor);
+        redirectAttributes.addFlashAttribute("mgsecolor","Xóa Màu Thành Công Mã Màu là: " +idColor);
+        return "redirect:/approve-color/"+idProduct;
+    }
     @PostMapping(value = "/approved")
     public String AdminCreate(@RequestParam("submit") String submit, Product product, Model model, RedirectAttributes redirectAttributes, Principal principal) {
         if (submit.equals("duyet")) {

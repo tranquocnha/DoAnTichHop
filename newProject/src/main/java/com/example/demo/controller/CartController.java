@@ -87,7 +87,22 @@ public class CartController {
         modelAndView.addObject("cartSize", cartMap.size());
         return modelAndView;
     }
-
+    @ModelAttribute("admin")
+    public String AdminOrSaler(){
+        Authentication  auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getAuthorities().toString().equals("[ROLE_ADMIN]")){
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
+                return "là admin";
+            }
+        }else{
+            if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().
+                    anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
+                return "là saler";
+            }
+        }
+        return null;
+    }
 //    @GetMapping("/showCart/getData/{idProduct}&{idColor}")
     @GetMapping("/showCart/getData/{idProduct}")
     public String show(@PathVariable(value ="idProduct") int idProduct,
@@ -98,7 +113,7 @@ public class CartController {
         totalMoney = Double.parseDouble(money);
         sumTotalMoney += totalMoney;
         totalQuantity = Integer.parseInt(quantity);
-        extracted(idProduct, arrayQuantity, temp);
+        extracted(idColor, arrayQuantity, temp);
         System.out.println("totalMoney:" + totalMoney);
         System.out.println("totalMoney:" + totalQuantity);
         model.addAttribute("money", money);
@@ -112,11 +127,12 @@ public class CartController {
         System.out.println("color"+color.getColor());
         if (color != null) {
             for (int i = 0; i < 10; i++) {
-                if (arrayQuantity[i] == idProduct) {
+                if (arrayQuantity[i] == idColor) {
                     color.setQuantity(color.getQuantity() - temp[i]);
                     if (color.getQuantity() < 1) {
                         color.setStatus("Out of product");
                     }
+                    break;
                 }
             }
             colorService.save(color);
@@ -141,34 +157,38 @@ public class CartController {
         return "redirect:/showCart";
     }
 
-    private void extracted(@PathVariable int id, int[] arrayQuantity, int[] temp) {
+    private void extracted(@PathVariable int idColor, int[] arrayQuantity, int[] temp) {
         for (int i = 0; i < 10; i++) {
             if (arrayQuantity[i] == 0) {
-                arrayQuantity[i] = id;
+                arrayQuantity[i] = idColor;
                 temp[i] = totalQuantity;
                 break;
             }
         }
     }
 
+
     @GetMapping("/deleteCart/{id}")
-    public String deleteCart(@PathVariable int id, @SessionAttribute("carts") HashMap<Integer, Cart> cartMap, Model model) {
-        cartMap.remove(id);
-        extracted(id, arrayQuantity, temp);
-        Color color = colorService.findById(id);
+    public String deleteCart(@PathVariable int id, @SessionAttribute("carts") HashMap<Integer, Cart> cartMap, Model model) throws Exception {
+        Cart item = cartMap.get(id);
+        extracted(item.getColor().getIdColor(), arrayQuantity, temp);
+        Color color = colorService.findById(item.getColor().getIdColor());
         if (color != null) {
             for (int i = 0; i < 10; i++) {
-                if (arrayQuantity[i] == id) {
+                if (arrayQuantity[i] == item.getColor().getIdColor()) {
                     System.out.println("xoa " + temp[i]);
                     color.setQuantity(color.getQuantity() + temp[i]);
                     if (color.getQuantity() >= 1) {
-                        color.setStatus("Đã duyệt");
+                        color.setStatus("Còn hàng");
                     }
                     break;
                 }
             }
             colorService.save(color);
+        }else{
+            throw new Exception();
         }
+        cartMap.remove(id);
         return "redirect:/showCart";
     }
 
@@ -327,5 +347,10 @@ public class CartController {
         }
         sumTotalMoney = 0;
         return "redirect:/payPal";
+    }
+    @ExceptionHandler(Exception.class)
+    public String showErrorPage(Exception e, Model model){
+        model.addAttribute("message", e.getMessage());
+        return "/Vinh/ErrorPage";
     }
 }
