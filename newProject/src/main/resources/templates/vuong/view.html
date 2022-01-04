@@ -85,25 +85,25 @@
             <form method="get" action="/product/view" th:object="${products}">
                 <fieldset>
                     <div class="services-top">
-                        <h3 class="btn btn-secondary"> Chi tiết sản phẩm </h3>
+                        <h3 class="btn services-top-button"> Chi tiết sản phẩm </h3>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label"  style="padding: 10px 20px 10px 5px;">Mã Sản Phẩm:</label>
-                        <div class="col-sm-7">
+                        <label class="col-sm-3 col-form-label form__title">Mã Sản Phẩm:</label>
+                        <div class="col-sm-7 form__content">
                             <span th:utext="*{idProduct}">  </span>
                             <input type="text" th:field="*{idProduct}" class="form-control is-invalid" hidden="hidden">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label"  style="padding: 10px 20px 10px 5px;">Tên sản phẩm:</label>
-                        <div class="col-sm-7">
+                        <label class="col-sm-3 col-form-label form__title">Tên sản phẩm:</label>
+                        <div class="col-sm-7 form__content" >
                             <span th:utext="*{productName}"></span>
                             <input type="text" th:field="*{productName}" class="form-control is-invalid" hidden="hidden">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label"  style="padding: 10px 20px 10px 5px;">Người đăng:</label>
-                        <div class="col-sm-7">
+                        <label class="col-sm-3 col-form-label form__title" >Người đăng:</label>
+                        <div class="col-sm-7 form_content">
                             <span th:utext="${products.accounts.user.name}"></span>
                             <select class="form-control  is-invalid" th:field="*{accounts}" hidden="hidden">
                                 <option th:text="${products.accounts.user.name}"
@@ -113,8 +113,8 @@
                     </div>
 
                     <div class="form-group row">
-                        <label readonly class="col-sm-3 col-form-label"  style="padding: 10px 20px 10px 5px;">Danh Mục:</label>
-                        <div class="col-sm-7">
+                        <label readonly class="col-sm-3 col-form-label form__title">Danh Mục:</label>
+                        <div class="col-sm-7 form__content">
                             <select class="form-control  is-invalid" th:field="*{category}" hidden="hidden">
                                 <option th:text="${products.category.categoryName}"
                                         th:value="${products.category.idCategory}"></option>
@@ -123,8 +123,8 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label"  style="padding: 10px 20px 10px 5px;">Hình ảnh sản phẩm:</label>
-                        <div class="col-sm-7">
+                        <label class="col-sm-3 col-form-label form__title" >Hình ảnh sản phẩm:</label>
+                        <div class="col-sm-7 form__content">
                             <img style="height: 250px;width: auto;" th:src="@{${'/Images/' + products.image1}}" alt="">
                             <img style="height: 250px;width: auto;" th:src="@{${'/Images/' + products.image2}}" alt="">
                             <br/>
@@ -135,14 +135,14 @@
 
 
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Ngày Đăng :</label>
-                        <div class="col-sm-6">
+                        <label class="col-sm-3 col-form-label form__title">Ngày Đăng :</label>
+                        <div class="col-sm-6 form__content">
                             <span th:utext="*{datePost}"></span>
                             <input type="date" th:field="*{datePost}" class="form-control is-invalid" hidden="hidden">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Thông tin chi tiết:</label>
+                        <label class="col-sm-3 col-form-label form__title">Thông tin chi tiết:</label>
                         <div class="col-sm-9">
                             <span th:utext="*{description}"></span>
                             <textarea type="textarea" th:field="*{description}" class="form-control is-invalid" rows="6"
@@ -150,19 +150,27 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Tình Trạng:</label>
-                        <div class="col-sm-7">
-                            <span th:utext="*{status}"></span>
+                        <label class="col-sm-3 col-form-label form__title">Tình Trạng:</label>
+                        <div class="col-sm-7 form__content">
+                            <span class="form__content_status" th:utext="*{status}"></span>
                             <input type="text" th:field="*{status}" class="form-control is-invalid" hidden="hidden">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-3">
                         </div>
-                        <div class="col-sm-2">
-                            <a th:href="@{/product/list}">Close</a>
-                            <br/>
-                            <a th:href="@{/product/edit(id = ${products.idProduct})}">Edit</a>
+                        <div class="col-sm-9 ">
+                            <div class="form__group_button">
+                                <button class="form__group_button_edit">
+                                    <a th:href="@{/product/edit(id = ${products.idProduct})}">Chỉnh sửa</a>
+                                </button>
+
+                            <button class="form__group_button_back">
+                                <a th:href="@{/product/list}">Quay lại</a>
+                            </button>
+
+                            </div>
+
                         </div>
                     </div>
                 </fieldset>
@@ -170,9 +178,7 @@
 
         </div>
     </div>
-    <div class="col-sm-2">
 
-    </div>
 </div>
 
 
