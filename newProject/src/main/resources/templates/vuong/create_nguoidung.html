@@ -96,10 +96,10 @@
     <form method="post" action="/product/create" th:object="${products}">
         <fieldset>
             <div class="services-top">
-                <h3 class="btn btn-secondary">Thêm Sản Phẩm</h3>
+                <h3 class="btn services-top-button ">Thêm Sản Phẩm</h3>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Tên sản phẩm *</label>
+                <label class="col-sm-2 col-form-label form__title">Tên sản phẩm *</label>
                 <div class="col-sm-8">
                     <input type="text" th:field="*{productName}" class="form-control is-invalid"/>
                     <p style="color: #ff0000" th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}"></p>
@@ -107,7 +107,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Danh Mục *</label>
+                <label class="col-sm-2 col-form-label form__title">Danh Mục *</label>
                 <div class="col-sm-8">
                     <select class="form-control custom-select is-invalid" th:field="*{category}">
                         <option th:each="cate: ${category}" th:text="${cate.categoryName}"
@@ -116,8 +116,8 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Hình ảnh sản phẩm *</label>
-                <div class="col-sm-8">
+                <label class="col-sm-2 col-form-label form__title">Hình ảnh sản phẩm *</label>
+                <div class="col-sm-8 form__group_button_img">
                     <input type="file" th:field="*{image1}" class="form-control-file is-invalid">
                     <input type="file" th:field="*{image2}" class="form-control-file is-invalid">
                     <input type="file" th:field="*{image3}" class="form-control-file is-invalid">
@@ -125,14 +125,14 @@
             </div>
 
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Thông tin chi tiết</label>
+                <label class="col-sm-2 col-form-label form__title">Thông tin chi tiết</label>
                 <div class="col-sm-10">
                     <textarea type="textarea" th:field="*{description}" class="form-control is-invalid" rows="6"> </textarea>
                     <p style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Ngày đăng</label>
+                <label class="col-sm-2 col-form-label form__title">Ngày đăng</label>
                 <div class="col-sm-8">
                     <input readonly type="date" th:field="*{datePost}" th:value="*{datePost}"
                            class="form-control is-invalid" hidden="hidden">
@@ -153,7 +153,7 @@
             </div>
 
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Tài Khoản bán *</label>
+                <label class="col-sm-2 col-form-label form__title">Tài Khoản bán *</label>
                 <div class="col-sm-8">
                     <span th:utext="${userName}"></span>
                     <select class="form-control custom-select is-invalid" th:field="*{accounts}" hidden="hidden">
@@ -168,7 +168,7 @@
                 <div class="col-sm-2">
                 </div>
                 <div class="col-sm-1">
-                    <input type="submit" style="background:#1ab7ea;color: white" class="form-control"
+                    <input type="submit" class="form-control form__group_input"
                            value="Thêm">
                 </div>
             </div>

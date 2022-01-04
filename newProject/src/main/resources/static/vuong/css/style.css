@@ -206,6 +206,103 @@ a.morebtn:hover {
     background: #585686;
 }
 
+.form__title {
+    padding: 10px 20px 10px 5px;
+    color:#000;
+}
+
+.form__content {
+    display: flex;
+    align-items: center;
+}
+
+.form__group_input  {
+    background: #FFCC20 !important;
+    color: white !important;
+    font-weight: 500 !important;
+    min-width: 100px !important;
+    border: 1px solid #FFCC20; !important;
+}
+
+.form__content_status {
+    color:white;
+    padding: 5px 10px;
+    background: #7cb305;
+    border-radius: 10px;
+}
+
+.form__group_button  {
+     display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 20px;
+}
+
+
+.form__group_button_back {
+    margin:0px 0px 0px 20px;
+    border: 1px solid #FFCC20;
+    background: #FFCC20;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    min-width: 100px;
+    height: 35px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.form__group_button_back:hover {
+    color:white !important;
+}
+
+.custom-select {
+    margin: 0px !important;
+}
+
+.form__group_button_img {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form__group_button_img > input {
+
+}
+
+.form__group_button_edit {
+    padding: 5px 10px;
+    background: #041E42;
+    border: 1px solid #041E42;
+    border-radius: 10px;
+    cursor: pointer;
+    min-width: 100px;
+    height: 35px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.form__group_button_edit:hover {
+    color:white !important;
+}
+
+.form__group_button_back > a , .form__group_button_edit > a {
+    text-decoration: none;
+    font-weight: 500;
+    color: white;
+}
+
+.services-top-button {
+    background: #FFCC20 !important;
+    animation: all ease-in-out 300ms;
+    cursor: pointer;
+    color:white !important;
+}
+
+.services-top-button {
+    background: #fadb14;
+    color: white !important;
+}
+
 .callbacks_nav {
     position: absolute;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -287,10 +384,9 @@ a.morebtn:hover {
 }
 
 .services-top {
-    text-align: center;
-    /*padding: 2em 0em 3em 0em;*/
+    margin:10px 0px;
     padding: 8px 24px;
-    margin:0px 7px
+    text-align: center;
 }
 
 .services-top > button > a {
