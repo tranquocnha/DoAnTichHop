@@ -1,4 +1,14 @@
 /* Main */
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@200&display=swap');
+*{
+    box-sizing: border-box;
+    font-family: 'Lexend', sans-serif;
+}
+
+body,h1,h2,h3,h4,h5,h6 {
+             margin: 0px;
+             padding:0px
+}
 
 .page__container {
     max-width: 1250px;
@@ -316,6 +326,43 @@
     font-size: 20px;
 }
 
+.form__auction > h3 {
+    font-size: 20px;
+    color:#000;
+}
+
+.form__auction_button > button {
+    color: #c9c9c9;
+    padding: 0 10px;
+    height: 36px;
+    min-width: 36px;
+    text-align: center;
+    line-height: 34px;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+}
+
+.form__auction_button > button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 7px 14px rgb(50 50 93 / 10%), 0 3px 6px rgb(0 0 0 / 8%);
+}
+
+.form__auction_button > button > span {
+    font-size: 18px;
+    color: #c9c9c9;
+}
+
+.form__auction_button  input{
+    width: 60px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000;
+    text-align: center;
+    border: none;
+}
 
 
 .product__comment-content {
@@ -448,14 +495,23 @@ label.star:before {
     color:white;
 }
 
-.plus__btn , .minus__btn {
-    background-color: #fadb14;
-    border-radius: 5px;
-    outline: none;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
+.form__auction {
+    display: flex;
+    align-items: center;
 }
+
+.form__auction_button {
+    margin: 0px 0px 0px 15px;
+}
+
+/*.plus__btn , .minus__btn {*/
+/*    background-color: #fadb14;*/
+/*    border-radius: 5px;*/
+/*    outline: none;*/
+/*    width: 30px;*/
+/*    height: 30px;*/
+/*    cursor: pointer;*/
+/*}*/
 .modal-title {
     display: flex;
     align-items: center;
