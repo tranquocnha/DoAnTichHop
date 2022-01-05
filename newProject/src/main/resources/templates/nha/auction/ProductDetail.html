@@ -80,9 +80,18 @@
         <div class="bid-level">
           <form action="/dauGia" method="post">
             <input type="hidden" name="idSP" class="moneyDauGia" th:value="${sanPham.idProduct}">
-            <button id="minus-btn" class="minus__btn" onclick="handleDecreasePrice()" type="button">-</button>
-            <input style="text-align: center" type="text" th:value="${giaDau}" class="moneyDauGia" id="input-level"  name="money">
-            <button id="plus-btn"  class="plus__btn" onclick="handleIncreasePrice()" type="button">+</button>
+            <div class="form__auction">
+              <h3>Giá Đấu:</h3>
+              <div class="form__auction_button">
+                <button id="minus-btn" class="minus__btn border rounded-circle" style="background: white;border-color: #c9c9c9" onclick="handleDecreasePrice()" type="button">
+                  <span>&#8722;</span>
+                </button>
+                <input style="text-align: center" type="text" th:value="${giaDau}" class="moneyDauGia" id="input-level"  name="money">
+                <button id="plus-btn"  class="plus__btn border rounded-circle" style="background: #041E42; border-color: #041E42" onclick="handleIncreasePrice()" type="button">
+                  <span>&#43;</span>
+                </button>
+              </div>
+            </div>
             <button sec:authorize="isAuthenticated()" type="submit" class="bid-btn"
                     id="btn-dauGia" style="color: white">
               <span class="btn-icon"><ion-icon name="hammer"></ion-icon></span>
