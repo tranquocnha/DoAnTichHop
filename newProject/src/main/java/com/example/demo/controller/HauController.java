@@ -47,7 +47,11 @@ public class HauController {
     AccountServiceImpl accountSerivceImpl;
     @Autowired
     private JavaMailSender mailSender;
-
+    @ModelAttribute("userNames")
+    public AccUser getDauGia() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userRepo.findByAccount_IdAccount(auth.getName());
+    }
     @ModelAttribute("admin")
     public String AdminOrSaler(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

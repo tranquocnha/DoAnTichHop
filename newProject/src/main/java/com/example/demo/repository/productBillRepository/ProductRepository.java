@@ -1,6 +1,8 @@
 package com.example.demo.repository.productBillRepository;
 
 import com.example.demo.model.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -9,6 +11,11 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 //    List<Product> findByStatusAndCategory_IdCategoryOrderByPrice(String status , int category);
+
+    // comment - product inner join
+    @Query(value = "select p from  Product p inner join Comment cm on cm.product.idProduct=p.idProduct")
+    Page<Product> findProductAndComment(Pageable pageable);
+
 
     @Query("select p from  Product p where p.accounts.idAccount= ?1")
     List<Product> findProduct(String idAccount);

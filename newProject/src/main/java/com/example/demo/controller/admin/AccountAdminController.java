@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controller.admin;
 
 import com.example.demo.model.AccUser;
 import com.example.demo.model.Address;

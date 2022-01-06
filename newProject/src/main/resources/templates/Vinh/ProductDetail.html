@@ -243,8 +243,8 @@
 
     function handleDescrease(){
         quantityModel();
-        if(index <= 1) {
-            index = 1;
+        if(index <= 0) {
+            index = 0;
             countElement.value = index
             submit.value = parseFloat(this.values) * parseFloat(index) ;
         }else{
