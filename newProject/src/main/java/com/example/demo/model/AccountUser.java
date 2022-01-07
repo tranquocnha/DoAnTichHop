@@ -47,10 +47,18 @@ public class AccountUser implements Validator {
     @Size(min = 5, message = "vui lòng nhập mật khẩu lớn hơn 4 ký tự")
     private String passWord1;
 
+    private String rePassWord1;
+
     public AccountUser() {
     }
 
+    public String getRePassWord1() {
+        return rePassWord1;
+    }
 
+    public void setRePassWord1(String rePassWord1) {
+        this.rePassWord1 = rePassWord1;
+    }
 
     public Integer getId() {
         return id;

@@ -46,7 +46,13 @@ public class Account {
 
     public Account() {
     }
-
+    public Account(String userName1, String encode, String encode1, boolean b, Set<Role> roles) {
+        this.idAccount = idAccount;
+        this.password = password;
+        this.rePassword = rePassword;
+        this.status = status;
+        this.roles = roles;
+    }
     public Account(String idAccount, String password, boolean status, Set<Role> roles) {
         this.idAccount = idAccount;
         this.password = password;
