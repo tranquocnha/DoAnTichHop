@@ -51,7 +51,7 @@ body,h1,h2,h3,h4,h5,h6 {
     /*margin: 92px 0px 0px;*/
     padding:0px 26px;
     width: 266px;
-    /*height: 100%;*/
+    height: 100%;
 }
 
 .main__left::after{
@@ -138,6 +138,63 @@ body,h1,h2,h3,h4,h5,h6 {
     width: calc(100% - 266px);
 }
 
+.main__right_edit_auction {
+    display: flex;
+    justify-content: center;
+    padding:0px  56px 40px;
+    width: calc(100% - 266px);
+}
+
+.form-row {
+    margin:19px 0px;
+}
+
+.form-row > .name {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 161px;
+    color:#000;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.form-now > .name::after {
+    position: absolute;
+    content: '*';
+    margin:0px 0px 0px 10px;
+    color:#f5222d;
+    font-size: 14px;
+
+}
+
+.form-row > .value > .input-group > input {
+    background: #F6F6F7;
+    width: 382px;
+    height: 39px;
+    padding: 15px 14px;
+    color: #000;
+    outline: none;
+    border: 1px solid #F6F6F7
+}
+
+.containerBtn {
+    display: flex;
+    justify-content: flex-end;
+    margin:25px 0px 0px 0px;
+}
+
+.containerBtn > button {
+    width: 115px;
+    padding: 7px 20px;
+    background: white;
+    outline: none;
+    border: 1px solid #041E42;
+    color: #000;
+    font-weight: 700;
+    color: #000;
+}
+
 .table__container {
     width: 100%;
     border: 1px solid #ccc;
@@ -186,7 +243,15 @@ body,h1,h2,h3,h4,h5,h6 {
     margin-top: 23px;
 }
 
+.center__pagination_img {
+    margin: 0px 10px;
+}
 
+.center__pagination_img > a > img {
+    width: auto;
+    height: 20px;
+    cursor: pointer;
+}
 
 
 
@@ -402,7 +467,8 @@ body,h1,h2,h3,h4,h5,h6 {
 .search__space {
     display: flex;
     justify-content: flex-end;
-    margin: 0px 0px 15px;
+    /*margin: 0px 0px 15px;*/
+    margin:30px 56px ;
 }
 
 
@@ -415,6 +481,7 @@ body,h1,h2,h3,h4,h5,h6 {
     position: absolute;
     content: ' /';
     top: 0px;
+    padding:0px 5px;
 
 }
 
