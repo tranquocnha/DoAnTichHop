@@ -14,15 +14,6 @@ public class Account {
 
 //     @ManyToMany(mappedBy = "accounts",fetch = FetchType.EAGER)
 //    private Set<Role> roles;
-
-    public String getResetPasswordToken() {
-        return resetPasswordToken;
-    }
-
-    public void setResetPasswordToken(String resetPasswordToken) {
-        this.resetPasswordToken = resetPasswordToken;
-    }
-
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
 
@@ -46,16 +37,11 @@ public class Account {
 
     public Account() {
     }
-    public Account(String userName1, String encode, String encode1, boolean b, Set<Role> roles) {
+    public Account(String idAccount, String password,String rePassword,String resetPasswordToken, boolean status, Set<Role> roles) {
         this.idAccount = idAccount;
         this.password = password;
         this.rePassword = rePassword;
-        this.status = status;
-        this.roles = roles;
-    }
-    public Account(String idAccount, String password, boolean status, Set<Role> roles) {
-        this.idAccount = idAccount;
-        this.password = password;
+        this.resetPasswordToken = resetPasswordToken;
         this.status = status;
         this.roles = roles;
     }
@@ -153,5 +139,12 @@ public class Account {
 
     public void setColors(Set<Color> colors) {
         this.colors = colors;
+    }
+    public String getResetPasswordToken() {
+        return resetPasswordToken;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
     }
 }

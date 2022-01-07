@@ -54,8 +54,17 @@
                     <p class="form__field-error" th:errors="*{passWord1}"></p>
                 </div>
 
+
+
             </div>
 
+            <div class="form__field">
+                <input type="Password"  class="form__field-input"  placeholder=" " th:id="rePassWord1" th:name="rePassWord1">
+                <label class="form__field-label" >Xác Nhận Mật khẩu</label>
+
+                <!--                <p class="form__field-error" th:if="${#fields.hasErrors('rePassWord1')}" ></p>-->
+                <!--                <p class="form__field-error" th:errors="*{rePassWord1}"></p>-->
+            </div>
 
             <div class="form__register-content">
 

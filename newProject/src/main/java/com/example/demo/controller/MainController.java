@@ -54,6 +54,7 @@ public class MainController {
 
     @Autowired
     AddressService addressService;
+    AccountUser accountUser1;
     @ModelAttribute("admin")
     public String AdminOrSaler(){
         Authentication  auth = SecurityContextHolder.getContext().getAuthentication();
@@ -117,7 +118,8 @@ public class MainController {
 
 
 
-        String userName = accountUser.getName1();
+        String userName = accountUser.getUserName1();
+        String name = accountUser.getName1();
         String sex = accountUser.getSex1();
         String date = accountUser.getDateTime1();
         String email1 = accountUser.getGmail1();
@@ -129,6 +131,7 @@ public class MainController {
 
 
         String registerLink = Utility.getSiteURL(request) + "/confirmRegister?&userName=" + userName
+                + "&name=" + name
                 + "&sex=" + sex
                 + "&date=" + date
                 + "&email1=" + email1
@@ -147,6 +150,7 @@ public class MainController {
         redirectAttributes.addAttribute("numberCard", numberCard);
         redirectAttributes.addAttribute("add", add);
         redirectAttributes.addAttribute("date", date);
+        redirectAttributes.addAttribute("name", name);
 //
 //        address.setAccUser(user);
 //        address.setNameAddress(accountUser.getAddress1());
@@ -162,9 +166,10 @@ public class MainController {
 //        return "Hau/RegisterCheck";
     }
 
-    @RequestMapping("/confirmRegister")
+    @GetMapping(value = "/confirmRegister")
     public String page2(
             @RequestParam("userName") String userName,
+            @RequestParam("name") String name,
             @RequestParam("address")
                     String add,
             @RequestParam("password")
@@ -183,7 +188,6 @@ public class MainController {
                     String rePassword,
             AccountUser accountUser,
             Model model) {
-
         model.addAttribute("email1", email1);
         model.addAttribute("password", password);
         model.addAttribute("phoneUser", phoneUser);
@@ -193,36 +197,27 @@ public class MainController {
         model.addAttribute("add", add);
         model.addAttribute("date", date);
         model.addAttribute("rePassword", rePassword);
+        model.addAttribute("name", name);
+        accountUser1 = new AccountUser(name,sex,date,email1,numberCard,add,phoneUser,userName,password,rePassword);
 //        model.addAttribute("roles", roles);
 
         return "Hau/RegisterCheck";
     }
-
     @PostMapping("/confirm")
-    private String page3(Address address, AccountUser user, Model model,RedirectAttributes redirectAttributes,Account account) {
-        model.addAttribute("user",user);
-        Address address1 = new Address();
-
-
-
+    private String page3(Model model,RedirectAttributes redirectAttributes,Account account) {
+        Address address = new Address();
         Set<Role> roles = roleService.findByRoleName("ROLE_CUSTOMER");
-        Account account1 = new Account(user.getUserName1(), user.getPassWord1(),user.getRePassWord1(), true, roles);
+        Account account1 = new Account(accountUser1.getUserName1(),bCryptPasswordEncoder.encode(accountUser1.getPassWord1()),accountUser1.getRePassWord1(),null, true, roles);
+        AccUser user1 = new AccUser( accountUser1.getName1(), Boolean.parseBoolean(accountUser1.getSex1()),
+                accountUser1.getDateTime1(), accountUser1.getGmail1(),
+                accountUser1.getNumberCard1(), accountUser1.getPhoneUser1(), account1);
 
-        AccUser user1 = new AccUser( user.getName1(), Boolean.parseBoolean(user.getSex1()),
-                user.getDateTime1(), user.getGmail1(),
-                user.getNumberCard1(), user.getPhoneUser1(), account1);
-
-
-//        userService.save(user1);
-        address1.setAccUser(user1);
-        address1.setNameAddress(user.getAddress1());
-        addressService.save(address1);
-
+        address.setAccUser(user1);
+        address.setNameAddress(accountUser1.getAddress1());
+        addressService.save(address);
         redirectAttributes.addFlashAttribute("message", "Successful Account");
-
         return "redirect:/login";
     }
-
 
     private void sendMailRegister(String email, String registerLink) throws UnsupportedEncodingException, MessagingException {
         MimeMessage message = mailSender.createMimeMessage();

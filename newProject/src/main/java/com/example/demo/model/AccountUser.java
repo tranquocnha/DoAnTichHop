@@ -52,6 +52,19 @@ public class AccountUser implements Validator {
     public AccountUser() {
     }
 
+    public AccountUser(String name1, String sex1, String dateTime1, String gmail1, int numberCard1, String address1, String phoneUser1, String userName1, String passWord1, String rePassWord1) {
+        this.name1 = name1;
+        this.sex1 = sex1;
+        DateTime1 = dateTime1;
+        this.gmail1 = gmail1;
+        this.numberCard1 = numberCard1;
+        this.address1 = address1;
+        this.phoneUser1 = phoneUser1;
+        this.userName1 = userName1;
+        this.passWord1 = passWord1;
+        this.rePassWord1 = rePassWord1;
+    }
+
     public String getRePassWord1() {
         return rePassWord1;
     }
