@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.config.Utility;
 import com.example.demo.model.*;
 import com.example.demo.repository.UserRepository.UserRepository;
 import com.example.demo.service.accountService.AccountService;
@@ -9,6 +10,8 @@ import com.example.demo.service.roleService.RoleService;
 import com.example.demo.service.userService.UserService;
 import com.example.demo.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -17,8 +20,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Set;
@@ -40,6 +48,9 @@ public class MainController {
 
     @Autowired
     RoleService roleService;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     @Autowired
     AddressService addressService;
@@ -83,7 +94,7 @@ public class MainController {
     }
 
     @PostMapping(value = "/register")
-    public String singUp(@Valid @ModelAttribute("register") AccountUser accountUser, BindingResult bindingResult, Model model) {
+    public String singUp(@Valid @ModelAttribute("register") AccountUser accountUser, BindingResult bindingResult, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) throws MessagingException, UnsupportedEncodingException {
         new AccountUser().validate(accountUser, bindingResult);
         if (bindingResult.hasErrors()) {
             return "/nha/register";
@@ -103,31 +114,132 @@ public class MainController {
             model.addAttribute("errEmail", "Email da ton tai");
             return "/nha/register";
         }
-        Set<Role> roles = roleService.findByRoleName("ROLE_CUSTOMER") ;
-        System.out.println("quyền là  " + roles);
-
-        Address address = new Address();
-//        user.setName(accountUser.getName1());
-        Account account1 =new Account(accountUser.getUserName1(), bCryptPasswordEncoder.encode(accountUser.getPassWord1()),true, roles);
-//        user.setAccount(account1);
-//        user.setGmail(accountUser.getGmail1());
-//        user.setDateOfBirth(accountUser.getDateTime1());
-//        user.setPhoneUser(accountUser.getPhoneUser1());
-//        user.setNumberCard(accountUser.getNumberCard1());
-        AccUser user = new AccUser(accountUser.getName1(),Boolean.parseBoolean(accountUser.getSex1()),accountUser.getDateTime1(),accountUser.getGmail1(),
-                accountUser.getNumberCard1(),accountUser.getPhoneUser1(),account1);
-        address.setAccUser(user);
-        address.setNameAddress(accountUser.getAddress1());
 
 
 
-////        user.getAddress().add(address);
-//        userService.save(user);
+        String userName = accountUser.getName1();
+        String sex = accountUser.getSex1();
+        String date = accountUser.getDateTime1();
+        String email1 = accountUser.getGmail1();
+        int numberCard = accountUser.getNumberCard1();
+        String password = accountUser.getPassWord1();
+        String rePassword = accountUser.getRePassWord1();
+        String phoneUser = accountUser.getPhoneUser1();
+        String add = accountUser.getAddress1();
+
+
+        String registerLink = Utility.getSiteURL(request) + "/confirmRegister?&userName=" + userName
+                + "&sex=" + sex
+                + "&date=" + date
+                + "&email1=" + email1
+                + "&numberCard=" + numberCard
+                + "&password=" + password
+                + "&phoneUser=" + phoneUser
+                + "&address=" + add
+                + "&rePassword="+rePassword;
+
+        redirectAttributes.addAttribute("email1", email1);
+        redirectAttributes.addAttribute("password", password);
+        redirectAttributes.addAttribute("rePassword", rePassword);
+        redirectAttributes.addAttribute("phoneUser", phoneUser);
+        redirectAttributes.addAttribute("userName", userName);
+        redirectAttributes.addAttribute("sex", sex);
+        redirectAttributes.addAttribute("numberCard", numberCard);
+        redirectAttributes.addAttribute("add", add);
+        redirectAttributes.addAttribute("date", date);
+//
+//        address.setAccUser(user);
 //        address.setNameAddress(accountUser.getAddress1());
-        addressService.save(address);
-        System.out.println("nguoi dun  ==========" + user);
+//        user.getAddress().add(address);
+//        System.out.println("dia chi " + address);
+        System.out.println("repasss " + rePassword);
+        sendMailRegister(email1, registerLink);
+        return "/nha/login";
+
+
+//        System.out.println("nguoi dun  ==========" + user);
+//        return "redirect:/login";
+//        return "Hau/RegisterCheck";
+    }
+
+    @RequestMapping("/confirmRegister")
+    public String page2(
+            @RequestParam("userName") String userName,
+            @RequestParam("address")
+                    String add,
+            @RequestParam("password")
+                    String password,
+            @RequestParam("phoneUser")
+                    String phoneUser,
+            @RequestParam("email1")
+                    String email1,
+            @RequestParam("sex")
+                    String sex,
+            @RequestParam("numberCard")
+                    int numberCard,
+            @RequestParam("date")
+                    String date,
+            @RequestParam("rePassword")
+                    String rePassword,
+            AccountUser accountUser,
+            Model model) {
+
+        model.addAttribute("email1", email1);
+        model.addAttribute("password", password);
+        model.addAttribute("phoneUser", phoneUser);
+        model.addAttribute("userName", userName);
+        model.addAttribute("sex", sex);
+        model.addAttribute("numberCard", numberCard);
+        model.addAttribute("add", add);
+        model.addAttribute("date", date);
+        model.addAttribute("rePassword", rePassword);
+//        model.addAttribute("roles", roles);
+
+        return "Hau/RegisterCheck";
+    }
+
+    @PostMapping("/confirm")
+    private String page3(Address address, AccountUser user, Model model,RedirectAttributes redirectAttributes,Account account) {
+        model.addAttribute("user",user);
+        Address address1 = new Address();
+
+
+
+        Set<Role> roles = roleService.findByRoleName("ROLE_CUSTOMER");
+        Account account1 = new Account(user.getUserName1(), user.getPassWord1(),user.getRePassWord1(), true, roles);
+
+        AccUser user1 = new AccUser( user.getName1(), Boolean.parseBoolean(user.getSex1()),
+                user.getDateTime1(), user.getGmail1(),
+                user.getNumberCard1(), user.getPhoneUser1(), account1);
+
+
+//        userService.save(user1);
+        address1.setAccUser(user1);
+        address1.setNameAddress(user.getAddress1());
+        addressService.save(address1);
+
+        redirectAttributes.addFlashAttribute("message", "Successful Account");
+
         return "redirect:/login";
     }
+
+
+    private void sendMailRegister(String email, String registerLink) throws UnsupportedEncodingException, MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setFrom("nhokhau1603@gmail.com", "Neffex Support");
+        helper.setTo(email);
+        String subject = "Here's the link to your register account";
+        String content = "<p> Hello ,Mr/Mrs</p>"
+                + "<p>Do you want to sign up for a neffex account?.</p>"
+                + "<p>Clink the link to register account</p>"
+                + "<p><a href=\"" + registerLink + "\">Register account</a></p>"
+                + "<p>Ignore this email if you do remember your password,or you have not made the request</p>";
+        helper.setSubject(subject);
+        helper.setText(content, true);
+        mailSender.send(message);
+    }
+
 
     @GetMapping("/403")
     private String accessDenied(Model model, Principal principal) {
