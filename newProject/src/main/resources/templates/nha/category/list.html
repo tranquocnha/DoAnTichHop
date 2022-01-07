@@ -43,17 +43,16 @@
 <body>
 <div th:insert="~{/HeaderFooter/Header::header-cline}"></div>
 <div class="main">
+  <div class="search__form">
+    <form action="/admin/search" method="get">
+      <label>Tên Sản Phẩm : </label>
+      <input type="text" class="filter__input" name="nameProduct"  id="mem-name"/>
+      <button class="filter__btn" type="submit">Lọc kết quả</button>
+    </form>
+  </div>
   <div class="main__userbill">
     <div th:insert="~{/nha/admin/ListProduct::main__left}"></div>
     <div class="main__right">
-      <div class="create__category">
-        <button>
-          <a th:href="@{/admin/category/create}">
-            Thêm Thể Loại Sản Phẩm
-          </a>
-        </button>
-      </div>
-
       <div>
         <span class="alert alert-success" th:utext="${mgsedit}" th:if="${mgsedit}"></span>
       </div>
@@ -96,8 +95,7 @@
 
 </div>
 
-<div  th:insert="~{/HeaderFooter/Footer::footer_clinet}">
-</div>
+
 <script src="/bootstrap/js/jquery.js"></script>
 </body>
 </html>
