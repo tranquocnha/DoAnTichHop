@@ -11,6 +11,7 @@ import com.example.demo.service.colorService.ColorService;
 import com.example.demo.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,20 +44,22 @@ public class ProductController {
 
     @Autowired
     ColorService colorService;
+
     @ModelAttribute("userNames")
     public AccUser getDauGia() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return userRepo.findByAccount_IdAccount(auth.getName());
     }
+
     @ModelAttribute("admin")
-    public String AdminOrSaler(){
+    public String AdminOrSaler() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth.getAuthorities().toString().equals("[ROLE_ADMIN]")){
+        if (auth.getAuthorities().toString().equals("[ROLE_ADMIN]")) {
             if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
                     .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
                 return "là admin";
             }
-        }else{
+        } else {
             if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().
                     anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
                 return "là saler";
@@ -64,6 +67,7 @@ public class ProductController {
         }
         return null;
     }
+
     @GetMapping(value = "/product/list")
     public String user(Model model, Principal principal, @PageableDefault(size = 5) Pageable pageable) {
         String userName = principal.getName();
@@ -79,15 +83,14 @@ public class ProductController {
     }
 
     @GetMapping(value = "/product/upProductMoney")
-    public String formUpdateProduct(Product product, Model model , Principal principal) {
+    public String formUpdateProduct(Product product, Model model, Principal principal) {
         String userName = principal.getName();
-
         model.addAttribute("listSP", productService.findAllByNotApprovedYet("No money", userName));
         return "/vuong/listNoUpdateMoney";
     }
 
     @GetMapping(value = "/product/waitList")
-    public String formWaitList( Model model , Principal principal) {
+    public String formWaitList(Model model, Principal principal) {
         model.addAttribute("listProductColor", colorService.findByProduct_Status("No money"));
         return "/vuong/waitList";
     }
@@ -109,7 +112,7 @@ public class ProductController {
         model.addAttribute("userName", principal.getName());
         model.addAttribute("account", accountService.findAll());
         model.addAttribute("category", categoryService.findAll());
-        model.addAttribute("color" , colorService.findAll());
+        model.addAttribute("color", colorService.findAll());
         model.addAttribute("notApprovedYet", "No money");
         return "/vuong/create_nguoidung";
     }
@@ -129,7 +132,7 @@ public class ProductController {
             model.addAttribute("userName", principal.getName());
             model.addAttribute("account", accountService.findAll());
             model.addAttribute("category", categoryService.findAll());
-            model.addAttribute("color" , colorService.findAll());
+            model.addAttribute("color", colorService.findAll());
             model.addAttribute("notApprovedYet", "notUpdate");
             return "/vuong/create_nguoidung";
         }
@@ -152,45 +155,12 @@ public class ProductController {
         return "/vuong/view";
     }
 
-    @GetMapping(value = "/product/productDone")
-    public String doneProduct(Model model , Principal principal) {
-        Color color = new Color();
-        String userName = principal.getName();
-        model.addAttribute("colors" , color);
-        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
-            model.addAttribute("saler", "là saler");
-        }
-        AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
-        model.addAttribute("userNames", user);
-        model.addAttribute("userName", principal.getName());
-        model.addAttribute("account", accountService.findAll());
-        model.addAttribute("product" , productService.findAll());
-        model.addAttribute("productNoMoney", productService.findAllByNotApprovedYet("No money", userName));
-        model.addAttribute("stocking", "Còn hàng");
-        return "/vuong/create_color";
-    }
-
-    @PostMapping(value = "/product/productDone")
-    public String createColor(@ModelAttribute("colors") Color color , BindingResult bindingResult , Model model , Principal principal){
-        String idAccount = principal.getName();
-        if (bindingResult.hasFieldErrors()) {
-            model.addAttribute("userName", principal.getName());
-            model.addAttribute("notApprovedYet", "notUpdate");
-            return "/vuong/create_color";
-        }
-        this.colorService.save(color);
-        model.addAttribute("listProduct", colorService.findAllProduct(idAccount));
-        model.addAttribute("mgs", "thêm mới sản phẩm thành công");
-        return "/vuong/ListProductSaler";
-    }
-
     @GetMapping(value = "product/edit")
     public String viewEdit(@RequestParam("id") Integer id, Model model, Principal principal) {
         model.addAttribute("products", productService.findById(id));
         model.addAttribute("category", categoryService.findAll());
-        model.addAttribute("notApprovedYet11" , "Chưa duyệt");
-        model.addAttribute("waiting" , "No money");
+        model.addAttribute("notApprovedYet11", "Chưa duyệt");
+        model.addAttribute("waiting", "No money");
         return "/vuong/edit";
     }
 
@@ -213,9 +183,44 @@ public class ProductController {
         return "/vuong/ListProductSaler";
     }
 
+    @GetMapping("/product/productDone/{id}")
+    public String doneProduct(@PathVariable int id, Model model, Principal principal) {
+        Color color = new Color();
+        String userName = principal.getName();
+        model.addAttribute("colors", color);
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALER"))) {
+            model.addAttribute("saler", "là saler");
+        }
+        AccUser user = userRepo.findByAccount_IdAccount(principal.getName());
+        model.addAttribute("userNames", user);
+        model.addAttribute("userName", principal.getName());
+        model.addAttribute("account", accountService.findAll());
+        model.addAttribute("product", productService.findById(id));
+        model.addAttribute("productNoMoney", productService.findAllByNotApprovedYet("No money", userName));
+        model.addAttribute("stocking", "Còn hàng");
+        return "/vuong/create_color";
+    }
+
+    @PostMapping("/product/productDone")
+    public String createColor(@Valid @ModelAttribute("colors") Color color, BindingResult bindingResult, Model model, Principal principal) {
+        String idAccount = principal.getName();
+//        new Product().validate(product, bindingResult);
+        if (bindingResult.hasFieldErrors()) {
+            model.addAttribute("userName", principal.getName());
+            model.addAttribute("notApprovedYet", "notUpdate");
+            model.addAttribute("stocking", "Còn hàng");
+            return "/vuong/create_color";
+        }
+        this.colorService.save(color);
+        model.addAttribute("listProduct", colorService.findAllProduct(idAccount));
+        model.addAttribute("mgs", "thêm mới sản phẩm thành công");
+        return "/vuong/ListProductSaler";
+    }
+
     @GetMapping(value = "/product/delete/{idProduct}")
     public String deleteProduct(@PathVariable Integer idProduct, Model model, Principal principal) {
-        this.productService.delete(idProduct);
+        this.colorService.delete(idProduct);
         String idAccount = principal.getName();
         model.addAttribute("listProduct", colorService.findAllProduct(idAccount));
         model.addAttribute("mgsdelete", "Xóa sản phẩm thành công!");

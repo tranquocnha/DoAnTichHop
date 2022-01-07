@@ -29,7 +29,8 @@
           content="Auction Responsive web template, Bootstrap Web Templates, Flat Web Templates, AndriodCompatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design"/>
     <!--Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
+          type='text/css'>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -83,7 +84,41 @@
 </script>
 
 <div class="container">
-    <form method="post" action="/product/productDone" th:object="${colors}">
+
+    <div class="services__layout">
+        <div class="services-top">
+            <button class="btn ">
+                <a th:href="@{/product/list}">Sản Phẩm Của Bạn</a>
+            </button>
+        </div>
+        <div class="services-top">
+            <button class="btn ">
+                <a th:href="@{/product/listApproved}">Sản Phẩm Chưa Duyệt</a>
+            </button>
+        </div>
+        <div class="services-top">
+            <button class="btn ">
+                <a th:href="@{/product/NotApprove}">Sản Phẩm Không Duyệt</a>
+            </button>
+        </div>
+        <div class="services-top">
+            <button class="btn ">
+                <a th:href="@{/product/create}">Thêm Sản Phẩm</a>
+            </button>
+        </div>
+        <div class="services-top">
+            <button class="btn ">
+                <a th:href="@{/product/upProductMoney}">Cập nhập sản phẩm</a>
+            </button>
+        </div>
+        <div class="services-top">
+            <button class="btn ">
+                <a th:href="@{/product/waitList}">Danh sách chờ</a>
+            </button>
+        </div>
+    </div>
+
+    <form method="post" action="/product/productDone/" th:object="${colors}">
         <fieldset>
             <div class="services-top">
                 <h3 class="btn btn-secondary">Cập nhật sản phẩm</h3>
@@ -101,8 +136,8 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Số Lượng *</label>
                 <div class="col-sm-8">
-                    <input type="number" th:field="*{quantity}" class="form-control is-invalid">
-<!--                                <p style="color: red" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></p>-->
+                    <input type="text" th:field="*{quantity}" class="form-control is-invalid">
+                    <p style="color: red" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></p>
                 </div>
             </div>
 
@@ -110,15 +145,14 @@
                 <label class="col-sm-2 col-form-label">Màu :</label>
                 <div class="col-sm-8">
                     <input type="text" th:field="*{color}" class="form-control is-invalid">
-                    <!--                                <p style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>-->
                 </div>
             </div>
 
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Giá :</label>
                 <div class="col-sm-8">
-                    <input type="number" th:field="*{price}" class="form-control is-invalid">
-<!--                                <p style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>-->
+                    <input type="text" th:field="*{price}" class="form-control is-invalid">
+                    <p style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
                 </div>
             </div>
             <div class="form-group row">

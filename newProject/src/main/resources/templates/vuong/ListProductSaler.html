@@ -15,8 +15,8 @@
 
     <link rel="stylesheet" href="/vuong/css/css1/style.css">
     <link rel="stylesheet" href="vuong/css/chat.css">
-<!--    <link href="/vuong/css/bootstrap.css" rel="stylesheet" type="text/css" media="all">-->
-<!--    <link href="/vuong/css/bootstrap4.css" rel="stylesheet" type="text/css" media="all">-->
+    <!--    <link href="/vuong/css/bootstrap.css" rel="stylesheet" type="text/css" media="all">-->
+    <!--    <link href="/vuong/css/bootstrap4.css" rel="stylesheet" type="text/css" media="all">-->
     <script src="/vuong/js/jquery-1.11.0.min.js"></script>
     <!-- Custom Theme files -->
     <link href="/vuong/css/style.css" rel="stylesheet" type="text/css" media="all"/>
@@ -25,11 +25,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<!--    Vinh-->
-<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
-<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
-<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
-
+    <!--    Vinh-->
+    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+    <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+    <!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
 
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -38,7 +37,7 @@
     <link rel="stylesheet" href="/Vinh/css/Header.css">
     <link rel="stylesheet" href="/Vinh/css/Footer.css">
     <style>
-        .btn-dau-gia{
+        .btn-dau-gia {
             margin-left: 11px;
         }
     </style>
@@ -66,37 +65,37 @@
 
         <div class="services-main">
             <div class="services__layout">
-                <div class="services-top" >
+                <div class="services-top">
                     <button class="btn ">
                         <a th:href="@{/product/list}">Sản Phẩm Của Bạn</a>
                     </button>
                 </div>
-                <div class="services-top" >
+                <div class="services-top">
                     <button class="btn ">
                         <a th:href="@{/product/listApproved}">Sản Phẩm Chưa Duyệt</a>
                     </button>
                 </div>
-                <div class="services-top" >
+                <div class="services-top">
                     <button class="btn ">
                         <a th:href="@{/product/NotApprove}">Sản Phẩm Không Duyệt</a>
                     </button>
                 </div>
-                <div class="services-top" >
+                <div class="services-top">
                     <button class="btn ">
                         <a th:href="@{/product/create}">Thêm Sản Phẩm</a>
                     </button>
                 </div>
-                <div class="services-top" >
+                <div class="services-top">
                     <button class="btn ">
                         <a th:href="@{/product/upProductMoney}">Cập nhập sản phẩm</a>
                     </button>
                 </div>
-                <div class="services-top" >
+                <div class="services-top">
                     <button class="btn ">
                         <a th:href="@{/product/waitList}">Danh sách chờ</a>
                     </button>
                 </div>
-        </div>
+            </div>
 
             <div style="clear: both">
                 <span class="alert alert-success" th:if="${mgsedit}">Sửa sản phẩm thành công!</span>
@@ -137,14 +136,15 @@
                                 </a>
                                 <div class="caption__item" style=" padding: 0em 0em 0.5em 0em;border-bottom: 0px">
                                     <h5 class="time"></h5>
-                                    <p class="price" th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'COMMA')}+'₫'"></p>
+                                    <p class="price"
+                                       th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'COMMA')}+'₫'"></p>
                                 </div>
                                 <div class="caption__button">
                                     <a th:href="@{/product/view(id = ${product.product.idProduct})}"
                                        class="btn btn-dau-gia  button__detail ">Chi tiết</a>
                                     <button class="btn btn-dau-gia btn-danger" data-toggle="modal"
                                             data-target="#exampleModal"
-                                            th:onclick="preparedelete([[${product.product.idProduct}]],[[${product.product.productName}]])">
+                                            th:onclick="preparedelete([[${product.idColor}]],[[${product.color}]])">
                                         Xóa
                                     </button>
                                 </div>

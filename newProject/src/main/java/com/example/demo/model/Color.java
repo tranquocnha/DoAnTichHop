@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 
 @Entity
 public class Color {
@@ -8,8 +9,10 @@ public class Color {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idColor;
     private String color;
+    @Min(value = 0)
     private int quantity;
     private String status;
+    @Min(value = 0)
     private double price;
 
     @ManyToOne(targetEntity = Account.class)

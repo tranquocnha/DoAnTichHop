@@ -82,6 +82,38 @@
     </div>
     <div class="col-sm-8">
         <div class="container">
+            <div class="services__layout">
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/list}">Sản Phẩm Của Bạn</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/listApproved}">Sản Phẩm Chưa Duyệt</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/NotApprove}">Sản Phẩm Không Duyệt</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/create}">Thêm Sản Phẩm</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/upProductMoney}">Cập nhập sản phẩm</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/waitList}">Danh sách chờ</a>
+                    </button>
+                </div>
+            </div>
             <form method="get" action="/product/view" th:object="${products}">
                 <fieldset>
                     <div class="services-top">
@@ -170,7 +202,6 @@
                             </button>
 
                             </div>
-
                         </div>
                     </div>
                 </fieldset>
