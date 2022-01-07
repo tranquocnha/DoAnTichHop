@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -12,10 +13,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="/vuong/css/css1/ionicons.min.css">
     <link rel="stylesheet" href="/vuong/css/css1/style.css">
-    <link href="/vuong/css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
-    <link href="/vuong/css/bootstrap4.css" rel="stylesheet" type="text/css" media="all">
+    <link rel="stylesheet" href="vuong/css/chat.css">
+    <!--    <link href="/vuong/css/bootstrap.css" rel="stylesheet" type="text/css" media="all">-->
+    <!--    <link href="/vuong/css/bootstrap4.css" rel="stylesheet" type="text/css" media="all">-->
     <script src="/vuong/js/jquery-1.11.0.min.js"></script>
     <!-- Custom Theme files -->
     <link href="/vuong/css/style.css" rel="stylesheet" type="text/css" media="all"/>
@@ -25,18 +26,23 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <!--    Vinh-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+    <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+    <!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
+
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" href="/Vinh/css/Header.css">
     <link rel="stylesheet" href="/Vinh/css/Footer.css">
-
+    <style>
+        .btn-dau-gia {
+            margin-left: 11px;
+        }
+    </style>
 </head>
 <body>
-
 <script src="js/responsiveslides.min.js"></script>
 <script>
     $(function () {
@@ -55,6 +61,38 @@
 <div class="services">
     <div class="container">
         <div class="services-main">
+            <div class="services__layout">
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/list}">Sản Phẩm Của Bạn</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/listApproved}">Sản Phẩm Chưa Duyệt</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/NotApprove}">Sản Phẩm Không Duyệt</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/create}">Thêm Sản Phẩm</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/upProductMoney}">Cập nhập sản phẩm</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/waitList}">Danh sách chờ</a>
+                    </button>
+                </div>
+            </div>
             <div class="services-top">
                 <h3 class="btn services-top-button">Sản phẩm Đang Chờ Admin Duyệt Của Bạn</h3>
             </div>
@@ -73,90 +111,95 @@
                 </div>
             </center>
             <div class="services-bottom">
-                <div class="row">
-                    <div class="col-sm-6 col-md-2 ser item-dau-gia" th:each="productList:${listSP}">
+                <div class="item-dau-gia-list">
+                    <div class="item-dau-gia" th:each="product:${listSP}">
                         <div class="thumbnail itemProduct">
                             <div class="img-dau-gia">
-                                <a><img th:src="@{${'/Images/' + productList.product.image1}}" alt="lỗi ảnh!"></a>
+                                <a><img
+                                        style="cursor: pointer"
+                                        th:src="@{${'/Images/' + product.getProduct().getImage1()}}"
+                                        alt="lỗi ảnh!"></a>
                             </div>
                             <div class="caption">
-                                <a th:href="@{/product-detail/{id}(id=${productList.product.idProduct})}"><h3
-                                        th:text="${productList.product.productName}" class="nameProduct"></h3>
-                                    <p th:text="${productList.product.category.categoryName}"></p></a>
-                                <div class="row rowProduct" style=" padding: 0em 0em 0.5em 0em;border-bottom: 0px">
-                                    <span class="col-md-6 time"></span>
-                                    <p class="col-md-6 price"
-                                       th:text="${#numbers.formatDecimal(productList.price, 0, 'POINT', 0, 'COMMA')}+'₫'"></p>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <a th:href="@{/product/edit(id = ${productList.product.idProduct})}"
-                                           class="btn btn-dau-gia btn-secondary">Sửa</a>
-                                        <a th:href="@{/product/view(id = ${productList.product.idProduct})}"
-                                           class="btn btn-dau-gia btn-secondary">Chi tiết</a>
+                                <a th:href="@{/productDetail/{id}(id=${product.getProduct().getIdProduct()})}">
+                                    <h3 th:text="${product.product.productName}" class="nameProduct"></h3>
+                                    <div class="caption__item">
+                                        <h5>Thể loại:</h5>
+                                        <p th:text="${product.product.category.categoryName}"></p>
                                     </div>
-                                    <div class="col-6">
-                                        <button class="btn btn-dau-gia btn-secondary" data-toggle="modal"
-                                                data-target="#exampleModal"
-                                                th:onclick="preparedelete([[${productList.product.idProduct}]],[[${productList.product.productName}]])">
-                                            Xóa
-                                        </button>
-                                    </div>
+<!--                                    <div class="caption__item">-->
+<!--                                        <h5>Màu sắc:</h5>-->
+<!--                                        <p th:text="${product.color}"></p>-->
+<!--                                    </div>-->
+                                </a>
+<!--                                <div class="caption__item" style=" padding: 0em 0em 0.5em 0em;border-bottom: 0px">-->
+<!--                                    <h5 class="time"></h5>-->
+<!--                                    <p class="price"-->
+<!--                                       th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'COMMA')}+'₫'"></p>-->
+<!--                                </div>-->
+                                <div class="caption__button">
+                                    <a th:href="@{/product/view(id = ${product.product.idProduct})}"
+                                       class="btn btn-dau-gia  button__detail ">Chi tiết</a>
+                                    <button class="btn btn-dau-gia btn-danger" data-toggle="modal"
+                                            data-target="#exampleModal"
+                                            th:onclick="preparedelete([[${product.product.idProduct}]],[[${product.product.productName}]])">
+                                        Xóa
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="exampleModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"
-                        aria-hidden="true">
-                    &times;
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Mã sản Phẩm :
-                    <span id="maSanPham"></span></p>
-                <p>Bạn có chắc chắn muốn xóa
-                    <span id="tenSanPham"></span>
-                    Không ?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy
-                </button>
-                <button onclick="deleteService($('#maSanPham').html())" type="button"
-                        class="btn btn-default" data-dismiss="modal">
-                    Xóa
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
-    function preparedelete(maSanPham, tenSanPham) {
-        $('#maSanPham').html(maSanPham)
-        $('#tenSanPham').html(tenSanPham)
-    }
 
-    function deleteService(maSanPham) {
-        console.log(maSanPham);
-        $.ajax(
-            {
-                type: 'get',
-                url: "/product/delete/" + maSanPham,
-                success: function () {
-                    window.location.href = "http://localhost:8080/product/listApproved";
+            </div>
+        </div>
+    </div>
+    <div id="exampleModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Mã sản Phẩm :
+                        <span id="maSanPham"></span></p>
+                    <p>Bạn có chắc chắn muốn xóa
+                        <span id="tenSanPham"></span>
+                        Không ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy
+                    </button>
+                    <button onclick="deleteService($('#maSanPham').html())" type="button"
+                            class="btn btn-default" data-dismiss="modal">
+                        Xóa
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function preparedelete(maSanPham, tenSanPham) {
+            $('#maSanPham').html(maSanPham)
+            $('#tenSanPham').html(tenSanPham)
+        }
+
+        function deleteService(maSanPham) {
+            console.log(maSanPham);
+            $.ajax(
+                {
+                    type: 'get',
+                    url: "/product/delete/" + maSanPham,
+                    success: function () {
+                        window.location.href = "http://localhost:8080/product/listApproved";
+                    }
                 }
-            }
-        )
-    }
-</script>
+            )
+        }
+    </script>
 
 
 </div>

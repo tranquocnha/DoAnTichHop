@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="/Vinh/css/Footer.css">
 
     <style>
-        .btn-dau-gia{
+        .btn-dau-gia {
             margin-left: 11px;
         }
     </style>
@@ -60,6 +60,38 @@
 <div class="services">
     <div class="container">
         <div class="services-main">
+            <div class="services__layout">
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/list}">Sản Phẩm Của Bạn</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/listApproved}">Sản Phẩm Chưa Duyệt</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/NotApprove}">Sản Phẩm Không Duyệt</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/create}">Thêm Sản Phẩm</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/upProductMoney}">Cập nhập sản phẩm</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/waitList}">Danh sách chờ</a>
+                    </button>
+                </div>
+            </div>
             <div class="services-top">
                 <h3 class="btn services-top-button">Sản phẩm không được Admin duyệt</h3>
             </div>
@@ -86,19 +118,13 @@
                     <div class="col-sm-6 col-md-2 ser item-dau-gia" th:each="product:${listSP}">
                         <div class="thumbnail itemProduct">
                             <div class="img-dau-gia">
-                                <a><img
-                                        th:src="@{${'/Images/' + product.image1}}"
+                                <a><img th:src="@{${'/Images/' + product.image1}}"
                                         alt="lỗi ảnh!"></a>
                             </div>
                             <div class="caption">
                                 <a th:href="@{/product-detail/{id}(id=${product.idProduct})}"><h3
                                         th:text="${product.productName}" class="nameProduct"></h3>
                                     <p th:text="${product.category.categoryName}"></p></a>
-                                <div class="row rowProduct" style=" padding: 0em 0em 0.5em 0em;border-bottom: 0px">
-                                    <span class="col-md-6 time"></span>
-                                    <p class="col-md-6 price"
-                                       th:text="${#numbers.formatDecimal(product.price, 0, 'POINT', 0, 'COMMA')}+'₫'"></p>
-                                </div>
                                 <div class="row" style="display: flex">
                                     <a th:href="@{/product/view(id = ${product.idProduct})}"
                                        class="btn btn-dau-gia btn-secondary">Chi tiết</a>

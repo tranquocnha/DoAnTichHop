@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>List No Money</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -13,10 +13,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="/vuong/css/css1/ionicons.min.css">
     <link rel="stylesheet" href="/vuong/css/css1/style.css">
-    <link href="/vuong/css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
-    <link href="/vuong/css/bootstrap4.css" rel="stylesheet" type="text/css" media="all">
+    <link rel="stylesheet" href="vuong/css/chat.css">
+    <!--    <link href="/vuong/css/bootstrap.css" rel="stylesheet" type="text/css" media="all">-->
+    <!--    <link href="/vuong/css/bootstrap4.css" rel="stylesheet" type="text/css" media="all">-->
     <script src="/vuong/js/jquery-1.11.0.min.js"></script>
     <!-- Custom Theme files -->
     <link href="/vuong/css/style.css" rel="stylesheet" type="text/css" media="all"/>
@@ -26,17 +26,25 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <!--    Vinh-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+    <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+    <!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
+
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" href="/Vinh/css/Header.css">
     <link rel="stylesheet" href="/Vinh/css/Footer.css">
-
+    <style>
+        .btn-dau-gia {
+            margin-left: 11px;
+        }
+    </style>
 </head>
 <body>
+
+<header th:insert="~{HeaderFooter/Header::header-cline}"></header>
 
 <script src="js/responsiveslides.min.js"></script>
 <script>
@@ -51,11 +59,41 @@
     });
 </script>
 
-<header th:insert="~{HeaderFooter/Header::header-cline}"></header>
-
 <div class="services">
     <div class="container">
         <div class="services-main">
+            <div class="services__layout">
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/list}">Sản Phẩm Của Bạn</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/listApproved}">Sản Phẩm Chưa Duyệt</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/NotApprove}">Sản Phẩm Không Duyệt</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/create}">Thêm Sản Phẩm</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/upProductMoney}">Cập nhập sản phẩm</a>
+                    </button>
+                </div>
+                <div class="services-top">
+                    <button class="btn ">
+                        <a th:href="@{/product/waitList}">Danh sách chờ</a>
+                    </button>
+                </div>
+            </div>
             <div class="services-top">
                 <h3 class="btn services-top-button">Sản phẩm Đang Chờ Cập Nhật Thêm Thông Tin</h3>
             </div>
@@ -73,33 +111,39 @@
                     <span class="alert alert-success" th:if="${mgs}">Thêm mới sản phẩm thành công.Sản phẩm sẽ được đấu giá khi admin duyệt!</span>
                 </div>
             </center>
-            <div class="services-bottom">
-                <div class="row">
-                    <div class="col-sm-6 col-md-2 ser item-dau-gia" th:each="productList:${listSP}">
-                        <div class="thumbnail itemProduct">
-                            <div class="img-dau-gia">
-                                <a><img th:src="@{${'/Images/' + productList.image1}}" alt="lỗi ảnh!"></a>
-                            </div>
-                            <div class="caption">
-                                <a th:href="@{/product-detail/{id}(id=${productList.idProduct})}"><h3 th:text="${productList.productName}" class="nameProduct"></h3>
-                                    <p th:text="${productList.category.categoryName}"></p></a>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <a th:href="@{/product/edit(id = ${productList.idProduct})}"
-                                           class="btn btn-dau-gia btn-secondary">Sửa</a>
-                                        <a th:href="@{/product/view(id = ${productList.idProduct})}"
-                                           class="btn btn-dau-gia btn-secondary">Chi tiết</a>
-                                        <a th:href="@{/product/productDone}"
-                                           class="btn btn-dau-gia btn-secondary">Cập Nhật</a>
-                                    </div>
-                                    <div class="col-6">
-                                        <button class="btn btn-dau-gia btn-secondary" data-toggle="modal"
-                                                data-target="#exampleModal"
-                                                th:onclick="preparedelete([[${productList.idProduct}]],[[${productList.productName}]])">
-                                            Xóa
-                                        </button>
-                                    </div>
+            <div class="col-sm-6 col-md-2 ser item-dau-gia" th:each="product:${listSP}">
+                <div class="services-bottom">
+                    <div class="thumbnail itemProduct">
+                        <div class="img-dau-gia">
+                            <a><img style="cursor: pointer"
+                                    th:src="@{${'/Images/' + product.getImage1()}}"
+                                    alt="lỗi ảnh!"></a>
+                        </div>
+                        <div class="caption">
+                            <a th:href="@{/productDetail/{id}(id=${product.getIdProduct()})}">
+                                <h3 th:text="${product.productName}" class="nameProduct"></h3>
+                                <h3 th:text="${product.idProduct}" class="idProduct"></h3>
+                                <div class="caption__item">
+                                    <h5>Thể loại:</h5>
+                                    <p th:text="${product.category.categoryName}"></p>
                                 </div>
+                            </a>
+                            <div class="caption__item"
+                                 style=" padding: 0em 0em 0.5em 0em;border-bottom: 0px">
+                                <h5 class="time"></h5>
+                            </div>
+                            <div class="caption__button">
+                                <a th:href="@{/product/view(id=${product.idProduct})}"
+                                   class="btn btn-dau-gia  button__detail">Chi tiết</a>
+
+                                <a th:href="@{/product/productDone/{id}(id=${product.idProduct})}"
+                                   class="btn btn-dau-gia  button__detail">Cập Nhật</a>
+
+                                <button class="btn btn-dau-gia btn-danger" data-toggle="modal"
+                                        data-target="#exampleModal"
+                                        th:onclick="preparedelete([[${product.idProduct}]],[[${product.productName}]])">
+                                    Xóa
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -123,7 +167,8 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Hủy
                 </button>
-                <button onclick="deleteService($('#maSanPham').html())" type="button" class="btn btn-default" data-dismiss="modal">
+                <button onclick="deleteService($('#maSanPham').html())" type="button" class="btn btn-default"
+                        data-dismiss="modal">
                     Xóa
                 </button>
             </div>
@@ -149,9 +194,6 @@
         )
     }
 </script>
-
-
-</div>
 
 <link rel="stylesheet" type="text/css" href="css/magnific-popup.css">
 <script type="text/javascript" src="js/nivo-lightbox.min.js"></script>
